@@ -8,11 +8,11 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(
         Projeto_DA_2
-        ../aed-project-2/main.cpp
+        main.cpp
 
-        ../Projeto_DA_1/src/Menu.cpp ../Projeto_DA_1/src/Menu.h
-        #../Projeto_DA_1/src/Railway.cpp ../Projeto_DA_1/src/Railway.h
-        #../Projeto_DA_1/src/VertexEdge.cpp ../Projeto_DA_1/src/VertexEdge.h
-        #../Projeto_DA_1/src/Graph.h ../Projeto_DA_1/src/Graph.cpp
-)
+        src/Menu.cpp src/Menu.h
+
+        src/TSP.h src/TSP.cpp
+        src/Graph.h src/Graph.cpp
+        src/VertexEdge.h src/VertexEdge.cpp)
 

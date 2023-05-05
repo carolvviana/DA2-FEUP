@@ -32,7 +32,10 @@
 *.app
 
 #Cmake build files
-../aed-project-2/cmake-build-debug
+cmake-build-debug
+
+#Big files
+data/Real-World-Graphs
 
 #Clion files
 .idea
