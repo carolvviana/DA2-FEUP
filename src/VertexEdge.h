@@ -8,17 +8,21 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-#include "../data_structures/MutablePriorityQueue.h"
 
 class Edge;
 
 #define INF std::numeric_limits<double>::max()
 
+struct Coordinates{
+    double lat;
+    double lon;
+};
+
 /************************* Vertex  **************************/
 
 class Vertex {
 public:
-    Vertex(int id);
+    Vertex(int id, double lat, double lon);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
     int getId() const;
@@ -29,6 +33,7 @@ public:
     double getDist() const;
     Edge *getPath() const;
     std::vector<Edge *> getIncoming() const;
+    Coordinates getCoords() const;
 
     void setId(int info);
     void setVisited(bool visited);
@@ -38,8 +43,9 @@ public:
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(int destID);
+    void setCoords(double lat, double lon);
+    void setLabel(std::string label);
 
-    friend class MutablePriorityQueue<Vertex>;
 protected:
     int id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
@@ -50,6 +56,9 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     Edge *path = nullptr;
+
+    Coordinates coords;
+    std::string label;
 
     std::vector<Edge *> incoming; // incoming edges
 

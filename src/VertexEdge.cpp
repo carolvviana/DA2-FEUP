@@ -4,7 +4,10 @@
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id): id(id) {}
+Vertex::Vertex(int id, double lat, double lon): id(id) {
+    this->coords.lat = lat;
+    this->coords.lon = lon;
+}
 
 /*
  * Auxiliary function to add an outgoing edge to a vertex (this),
@@ -108,6 +111,19 @@ void Vertex::setDist(double dist) {
 
 void Vertex::setPath(Edge *path) {
     this->path = path;
+}
+
+Coordinates Vertex::getCoords() const {
+    return coords;
+}
+
+void Vertex::setCoords(double lat, double lon) {
+    this->coords.lat = lat;
+    this->coords.lon = lon;
+}
+
+void Vertex::setLabel(std::string label) {
+    this->label = label;
 }
 
 /********************** Edge  ****************************/

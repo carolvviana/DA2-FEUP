@@ -13,7 +13,7 @@
  */
 enum MenuState{
     INIT_MENU, // Initial menu
-
+    MAIN_MENU, // Main menu
     // To add more menus, just add here
 };
 
@@ -22,7 +22,7 @@ enum MenuState{
  */
 class Menu {
 private:
-
+    TSP tsp;
 
     /**
      * @var menuState - stack of menu's states
