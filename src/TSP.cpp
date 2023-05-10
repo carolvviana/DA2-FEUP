@@ -215,25 +215,26 @@ void TSP::createTourism() {
     }
 }
 
-void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath) {
-    visited |= (1 << pos);
+void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, std::unordered_set<int>& visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath) {
+    visited.insert(pos);
     curPath.push_back(pos);
 
-    if (visited == (1 << n) - 1) {
+    if (visited.size() == n) {
         cost += vertexSet[pos]->getAdj()[0]->getWeight();
         if (cost < minCost) {
             minCost = cost;
             bestPath = curPath;
         }
         curPath.pop_back();
+        visited.erase(pos);
         return;
     }
 
-    for (unsigned int i = 0; i < n; i++) {
-        if (!(visited & (1 << i))) {
-            double newCost = cost + vertexSet[pos]->getAdj()[i]->getWeight();
+    for (const Edge* e : vertexSet[pos]->getAdj()) {
+        if (visited.find(e->getDest()->getId()) == visited.end()) {
+            double newCost = cost + e->getWeight();
             if (newCost < minCost) {
-                tspBTUtil(vertexSet, n, i, visited, newCost, minCost, curPath, bestPath);
+                tspBTUtil(vertexSet, n, e->getDest()->getId(), visited, newCost, minCost, curPath, bestPath);
             }
         }
     }
@@ -241,8 +242,8 @@ void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsi
     curPath.pop_back();
 }
 
-unsigned int TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
-    unsigned int visited = 0;
+double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
+    std::unordered_set<int> visited;
     double minCost = std::numeric_limits<double>::max();
     std::vector<unsigned int> curPath;
     std::vector<unsigned int> bestPath;
