@@ -3,12 +3,13 @@
 //
 
 #include "Menu.h"
+#include "TSP.h"
 
 using namespace std;
 
 Menu::Menu() {
     this->menuState.push(INIT_MENU);
-    railway = Railway();
+    tsp = TSP();
     getMenu();
 }
 

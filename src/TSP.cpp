@@ -11,6 +11,9 @@
 
 using namespace std;
 
+TSP::TSP() {
+}
+
 void TSP::createNodes(const std::string &filePath) {
     ifstream file;
     file.open(filePath);
@@ -211,5 +214,49 @@ void TSP::createTourism() {
         toyGraphTourism.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
     }
 }
+
+void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, unsigned int cost, unsigned int& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath) {
+    visited |= (1 << pos);
+    curPath.push_back(pos);
+
+    if (visited == (1 << n) - 1) {
+        cost += vertexSet[pos]->getAdj()[0]->getWeight();
+        if (cost < minCost) {
+            minCost = cost;
+            bestPath = curPath;
+        }
+        curPath.pop_back();
+        return;
+    }
+
+    for (unsigned int i = 0; i < n; i++) {
+        if (!(visited & (1 << i))) {
+            unsigned int newCost = cost + dists[pos][i];
+            if (newCost < minCost) {
+                tspBTUtil(vertexSet, n, i, visited, newCost, minCost, curPath, bestPath);
+            }
+        }
+    }
+
+    curPath.pop_back();
+}
+
+unsigned int TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
+    unsigned int visited = 0;
+    unsigned int minCost = UINT_MAX;
+    std::vector<unsigned int> curPath;
+    std::vector<unsigned int> bestPath;
+
+    std::vector<Vertex *> vertexSet = graph.getVertexSet();
+    tspBTUtil(vertexSet, n, 0, visited, 0, minCost, curPath, bestPath);
+
+    for (unsigned int i = 0; i < n; i++) {
+        path[i] = bestPath[i];
+    }
+
+    return minCost;
+}
+
+
 
 

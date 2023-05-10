@@ -7,6 +7,7 @@
 
 #include <stack>
 #include <iostream>
+#include "TSP.h"
 
 /*
  * Menu's states
@@ -37,7 +38,7 @@ private:
     /**
      * @var option - option selected by user
      */
-    int option;
+    int option{};
 
     /**
      * @brief Initial menu of application
