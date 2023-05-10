@@ -28,7 +28,7 @@ public:
 
     void tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath);
 
-    unsigned int tspBT(const Graph& graph, unsigned int n, unsigned int* path);
+    double tspBT(const Graph& graph, unsigned int n, unsigned int* path);
 
 private:
 

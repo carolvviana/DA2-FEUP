@@ -15,7 +15,8 @@
 enum MenuState{
     INIT_MENU, // Initial menu
     MAIN_MENU, // Main menu
-    // To add more menus, just add here
+    BASIC_TSP_BACKTRACK,// To add more menus, just add here
+    TSP_TRIANGLE_HEURISTIC
 };
 
 /*
@@ -44,6 +45,14 @@ private:
      * @brief Initial menu of application
      */
     void InitMenu();
+
+    void mainMenu();
+
+    void basicTSPBacktrack();
+
+    void TSPtriangle();
+
+    void clearStack();
 
 public:
     /**

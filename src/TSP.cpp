@@ -241,7 +241,7 @@ void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsi
     curPath.pop_back();
 }
 
-unsigned int TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
+double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
     unsigned int visited = 0;
     double minCost = std::numeric_limits<double>::max();
     std::vector<unsigned int> curPath;
