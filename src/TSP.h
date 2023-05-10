@@ -26,7 +26,7 @@ public:
     void createNodes(const std::string& filePath);
     void createEdges(const std::string& filePath);
 
-    void tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, unsigned int cost, unsigned int& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath);
+    void tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath);
 
     unsigned int tspBT(const Graph& graph, unsigned int n, unsigned int* path);
 
