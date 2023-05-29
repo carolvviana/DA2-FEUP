@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <unordered_set>
 #include "Graph.h"
 
 class TSP {
@@ -26,9 +27,12 @@ public:
     void createNodes(const std::string& filePath);
     void createEdges(const std::string& filePath);
 
-    void tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath);
+    void tspBTUtil(const Graph& graph, unsigned int n, unsigned int pos, std::unordered_set<int>& visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath);
 
     double tspBT(const Graph& graph, unsigned int n, unsigned int* path);
+
+    double tspTriangleHeuristic(Graph& graph, unsigned int* path);
+
 
 private:
 

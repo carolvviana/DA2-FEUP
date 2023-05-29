@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include <queue>
 #include <limits>
 #include <algorithm>
@@ -27,11 +28,13 @@ public:
 
     int getId() const;
     std::vector<Edge *> getAdj() const;
+    std::set<Edge *> getAdjSet() const;
+    std::vector<Vertex *> getAdjNodes() const;
     bool isVisited() const;
     bool isProcessing() const;
     unsigned int getIndegree() const;
     double getDist() const;
-    Edge *getPath() const;
+    Vertex* getPath() const;
     std::vector<Edge *> getIncoming() const;
     Coordinates getCoords() const;
 
@@ -40,29 +43,32 @@ public:
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
-    void setPath(Edge *path);
+    void setPath(Vertex *path);
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(int destID);
     void setCoords(double lat, double lon);
     void setLabel(std::string label);
 
+    int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
+
 protected:
     int id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
+    std::set<Edge*> adjSet;
 
     // auxiliary fields
     bool visited = false; // used by DFS, BFS, Prim ...
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;
-    Edge *path = nullptr;
+    Vertex *path = nullptr;
 
     Coordinates coords;
     std::string label;
 
     std::vector<Edge *> incoming; // incoming edges
 
-    int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
+
 };
 
 /********************** Edge  ****************************/
@@ -81,6 +87,9 @@ public:
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
+
+    bool operator<(Vertex &other);
+
 protected:
     Vertex * dest; // destination vertex
     double weight; // edge weight, can also be used for capacity
@@ -92,7 +101,7 @@ protected:
     Vertex *orig;
     Edge *reverse = nullptr;
 
-    double flow; // for flow-related problems
+    double flow; // for flow-related problem
 };
 
 #endif /* DA_TP_CLASSES_VERTEX_EDGE */

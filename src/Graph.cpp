@@ -1,6 +1,8 @@
 // By: Gonçalo Leão
 
+#include <cmath>
 #include "Graph.h"
+#include "MutablePriorityQueue.h"
 
 int Graph::getNumVertex() const {
     return vertexSet.size();
@@ -88,3 +90,96 @@ Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());
 }
+
+double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+
+    double dLat = (lat2 - lat1) * M_PI / 180.0;
+    double dLon = (lon2 - lon1) * M_PI / 180.0;
+    lat1 = (lat1) * M_PI / 180.0;
+    lat2 = (lat2) * M_PI / 180.0;
+
+    double a = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
+    double rad = 6371;
+    double c = 2 * asin(sqrt(a));
+    return rad * c; //in km
+}
+
+void Graph::minCostMST() {
+    std::vector<Vertex*> res;
+    if (vertexSet.empty()) {
+        return;
+    }
+    // Reset auxiliary info
+    for(auto v : vertexSet) {
+        v->setDist(INF);
+        v->setPath(nullptr);
+        v->setVisited(false);
+    }
+    // start with an arbitrary vertex
+    Vertex* s = vertexSet.front();
+    s->setDist(0);
+
+    // initialize priority queue
+    MutablePriorityQueue<Vertex> q;
+    q.insert(s);
+
+    // process vertices in the priority queue
+    while(!q.empty() ) {
+        double weight = 0;
+        auto v = q.extractMin();
+
+        v->setVisited(true);
+
+        for(auto &w : vertexSet) { // vai iterar por todos os vértices porque também temos de considerar aqueles que não têm uma edge
+            if (!w->isVisited()) { //para todos os vértices que ainda não foram visitados
+
+                for (auto e: v->getAdj()){
+                    if (e->getDest() == w){
+                        weight = e->getWeight(); // se ele existir vai ser esse o peso
+                        break;
+                    }
+                }
+                if (weight == 0) weight = calculateDistance(v->getCoords().lat, v->getCoords().lon, w->getCoords().lat, w->getCoords().lon);
+                // se não existir é a distância
+
+                double oldDist = w->getDist();
+                if(weight < oldDist) {
+                    w->setDist(weight);
+                    w->setPath(v);
+                    if (oldDist == INF) {
+                        q.insert(w);
+                    }
+                    else {
+                        q.decreaseKey(w);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes, bool firstVisit, double& cost) {
+    if (firstVisit){
+        for (auto ver: vertexSet) {
+            ver->setVisited(false);
+        }
+    }
+
+    if (v == nullptr) {
+        cost = 0;
+        return;
+    }
+
+    visitedNodes.push_back(v);
+    cost += v->getDist();
+    for (auto w: vertexSet) {
+        if (w->getPath() == v) {
+            preOrderVisit(w, visitedNodes, false, cost);
+        }
+    }
+}
+
+/*bool Graph :: canGoBack(Vertex* v){
+    if (v->getAdj().empty() && v->getId() != 0) return false;
+
+}*/

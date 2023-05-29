@@ -5,9 +5,9 @@
 
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <limits>
 #include <algorithm>
+#include <unordered_set>
 //#include "../data_structures/MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
@@ -35,6 +35,12 @@ public:
 
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
+
+
+
+    void minCostMST();
+    void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes, bool firstVisit, double& cost);
+
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
 
@@ -49,5 +55,16 @@ protected:
 
 void deleteMatrix(int **m, int n);
 void deleteMatrix(double **m, int n);
+
+/**
+ * Function that returns the distance between two points with coordinates passed by parameter
+ * Time Complexity: O(log(n))
+ * @param lat1 - a double value represents the latitude of first point
+ * @param lon1 - a double value represents the longitude of first point
+ * @param lat2 - a double value represents the latitude of second point
+ * @param lon2 - a double value represents the longitude of second point
+ * @return - a double value containing the distance between two points
+ */
+double calculateDistance(double lat1, double lon1, double lat2, double lon2);
 
 #endif /* DA_TP_CLASSES_GRAPH */

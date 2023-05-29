@@ -16,6 +16,7 @@ Vertex::Vertex(int id, double lat, double lon): id(id) {
 Edge * Vertex::addEdge(Vertex *d, double w) {
     auto newEdge = new Edge(this, d, w);
     adj.push_back(newEdge);
+    adjSet.insert(newEdge);
     d->incoming.push_back(newEdge);
     return newEdge;
 }
@@ -64,6 +65,10 @@ int Vertex::getId() const {
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
+std::set<Edge*> Vertex::getAdjSet() const {
+    return this->adjSet;
+}
+
 
 bool Vertex::isVisited() const {
     return this->visited;
@@ -81,7 +86,7 @@ double Vertex::getDist() const {
     return this->dist;
 }
 
-Edge *Vertex::getPath() const {
+Vertex* Vertex::getPath() const {
     return this->path;
 }
 
@@ -109,7 +114,7 @@ void Vertex::setDist(double dist) {
     this->dist = dist;
 }
 
-void Vertex::setPath(Edge *path) {
+void Vertex::setPath(Vertex *path) {
     this->path = path;
 }
 
@@ -124,6 +129,14 @@ void Vertex::setCoords(double lat, double lon) {
 
 void Vertex::setLabel(std::string label) {
     this->label = label;
+}
+
+std::vector<Vertex *> Vertex::getAdjNodes() const{
+    std::vector<Vertex*> res;
+    for (auto e: this->adj){
+        res.push_back(e->getDest());
+    }
+    return res;
 }
 
 /********************** Edge  ****************************/

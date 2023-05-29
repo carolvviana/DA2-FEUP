@@ -11,7 +11,7 @@ add_executable(
         main.cpp
 
         src/Menu.cpp src/Menu.h
-
+        src/MutablePriorityQueue.h
         src/TSP.h src/TSP.cpp
         src/Graph.h src/Graph.cpp
         src/VertexEdge.h src/VertexEdge.cpp)

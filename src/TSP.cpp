@@ -12,6 +12,7 @@
 using namespace std;
 
 TSP::TSP() {
+    createShipping(); createStadiums(); createTourism();
 }
 
 void TSP::createNodes(const std::string &filePath) {
@@ -215,40 +216,55 @@ void TSP::createTourism() {
     }
 }
 
-void TSP::tspBTUtil(const std::vector<Vertex *>& vertexSet, unsigned int n, unsigned int pos, unsigned int visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath) {
-    visited |= (1 << pos);
+void TSP::tspBTUtil(const Graph& graph, unsigned int n, unsigned int pos, std::unordered_set<int>& visited, double cost, double& minCost, std::vector<unsigned int>& curPath, std::vector<unsigned int>& bestPath) {
+    visited.insert(pos);
     curPath.push_back(pos);
 
-    if (visited == (1 << n) - 1) {
-        cost += vertexSet[pos]->getAdj()[0]->getWeight();
-        if (cost < minCost) {
-            minCost = cost;
-            bestPath = curPath;
+    bool canBack = false;
+    int temp_weight = 0;
+    /*if (visited.size() == n){
+        for (auto e: vertexSet[pos]->getAdj()){
+            if (e->getDest()->getId() == 0) canBack = true;
         }
-        curPath.pop_back();
-        return;
+    }*/
+
+    if (visited.size() == n) {
+        for (auto e: graph.findVertex(pos)->getAdj()){
+            if (e->getDest()->getId() == 0) { canBack = true; temp_weight = e->getWeight(); break; }
+        }
+        if (canBack){
+            cost += temp_weight;
+            if ((cost < minCost)) {
+                minCost = cost;
+                bestPath = curPath;
+            }
+            curPath.pop_back();
+            visited.erase(pos);
+            return;
+        }
     }
 
-    for (unsigned int i = 0; i < n; i++) {
-        if (!(visited & (1 << i))) {
-            double newCost = cost + vertexSet[pos]->getAdj()[i]->getWeight();
+    for (const Edge* e : graph.findVertex(pos)->getAdj()) {
+        if (visited.find(e->getDest()->getId()) == visited.end()) {
+            double newCost = cost + e->getWeight();
             if (newCost < minCost) {
-                tspBTUtil(vertexSet, n, i, visited, newCost, minCost, curPath, bestPath);
+                tspBTUtil(graph, n, e->getDest()->getId(), visited, newCost, minCost, curPath, bestPath);
             }
         }
     }
-
     curPath.pop_back();
+    visited.erase(pos);
 }
 
 double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
-    unsigned int visited = 0;
+    std::unordered_set<int> visited;
     double minCost = std::numeric_limits<double>::max();
     std::vector<unsigned int> curPath;
     std::vector<unsigned int> bestPath;
 
-    std::vector<Vertex *> vertexSet = graph.getVertexSet();
-    tspBTUtil(vertexSet, n, 0, visited, 0, minCost, curPath, bestPath);
+    //std::vector<Vertex *> vertexSet = graph.getVertexSet();
+    tspBTUtil(graph, n, 0, visited, 0, minCost, curPath, bestPath);
+    //tspBTUtil2(vertexSet, n, 0, 0, minCost, curPath, bestPath);
 
     for (unsigned int i = 0; i < n; i++) {
         path[i] = bestPath[i];
@@ -257,6 +273,33 @@ double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
     return minCost;
 }
 
+double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
+    vector<Vertex*> minPath;
+    chosen_graph.minCostMST();
+    double minCost = 0.0;
+    chosen_graph.preOrderVisit(chosen_graph.findVertex(0), minPath, true, minCost);
+    for (unsigned int i = 0; i < minPath.size(); i++) {
+        path[i] = minPath[i]->getId();
+    }
+
+    //distance from last to first
+    Vertex* lastVertex = minPath.back();
+    Vertex* firstVertex = chosen_graph.findVertex(0);
+
+    bool foundEdge = false;
+    for(Edge* e : lastVertex->getAdj()){
+        if(e->getDest() == firstVertex){
+            minCost += e->getWeight();
+            foundEdge = true;
+        }
+    }
+
+    if(!foundEdge){
+        minCost += calculateDistance(lastVertex->getCoords().lat, lastVertex->getCoords().lon, firstVertex->getCoords().lat, firstVertex->getCoords().lon);
+    }
+
+    return minCost;
+}
 
 
 

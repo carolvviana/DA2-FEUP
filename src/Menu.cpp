@@ -125,7 +125,211 @@ void Menu::mainMenu() {
 
     getMenu();
 }
+void Menu::basicTSPBacktrack() {
 
+    do {
+        cout << "Basic TSP with backtrack" << endl;
+        cout << "Which graphs do you want to test?" << endl;
+        cout << "1 - Toy graphs" << endl;
+        cout << "2 - Medium graphs" << endl;
+        cout << "3 - Real World graphs" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 5) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch (option) {
+        case 1: {
+            do {
+                cout << "1 - Shipping Graph" << endl;
+                cout << "2 - Stadium Graph" << endl;
+                cout << "3 - Tourism Graph" << endl;
+                cout << "Option:" << endl;
+                cin >> this->option;
+
+                if (this->option < 1 || this->option > 3) {
+                    cout << "Invalid Option!" << endl;
+                }
+
+                cin.clear(); // clear input buffer to restore cin to a usable state
+                cin.ignore(1000, '\n'); // ignore last input
+
+            } while (this->option < 1 || this->option > 3);
+
+            string number;
+            vector<string> res;
+
+            switch (this->option) {
+                case 1: {
+                    unsigned int path[this->tsp.toyGraphShipping.getNumVertex()];
+                    double minCost = tsp.tspBT(this->tsp.toyGraphShipping, this->tsp.toyGraphShipping.getNumVertex(),
+                                               path);
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+                    cout << " " << path[0] << " (again eheheh ;)" << endl;
+
+                    break;
+                }
+                case 2: {
+
+                    unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
+                    double minCost = tsp.tspBT(this->tsp.toyGraphStadiums, this->tsp.toyGraphStadiums.getNumVertex(),
+                                               path);
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+                    cout << " " << path[0] << " (again eheheh ;)" << endl;
+
+                    break;
+                }
+
+                case 3: {
+
+                    unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
+                    double minCost = tsp.tspBT(this->tsp.toyGraphTourism, this->tsp.toyGraphTourism.getNumVertex(),
+                                               path);
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+                    cout << " " << path[0] << " (again eheheh ;)" << endl;
+
+
+                    break;
+                }
+            }
+            break;
+
+        }
+
+        case 2: {
+            do {
+                cout << "Which graph do you want to choose? Pick from 1-12" << endl;
+                cout << "Option:" << endl;
+                cin >> this->option;
+
+                if (this->option < 1 || this->option > 12) {
+                    cout << "Invalid Option!" << endl;
+                }
+
+                cin.clear(); // clear input buffer to restore cin to a usable state
+                cin.ignore(1000, '\n'); // ignore last input
+
+            } while (this->option < 1 || this->option > 12);
+
+            switch (this->option) {
+                case 1: {
+                    unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
+                    double cost = tsp.tspTriangleHeuristic(tsp.toyGraphStadiums, path);
+
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+                    cout << cost << endl;
+                    break;
+                }
+                case 2: {
+
+                    break;
+                }
+                case 3: {
+
+                    break;
+                }
+                case 4: {
+
+                    break;
+                }
+                case 5: {
+
+                    break;
+                }
+                case 6: {
+
+                    break;
+                }
+                case 7: {
+
+                    break;
+                }
+                case 8: {
+
+                    break;
+                }
+                case 9: {
+
+                    break;
+                }
+                case 10: {
+
+                    break;
+                }
+                case 11: {
+
+                    break;
+                }
+                case 12: {
+
+                    break;
+                }
+
+
+                    break;
+            }
+            case 4: {
+                string station1;
+
+                do {
+
+                } while (true);
+
+                break;
+
+            }
+            case 5: {
+                //back
+                menuState.pop();
+                break;
+            }
+            case 6: {
+                //exit
+                clearStack();
+                break;
+            }
+        }
+
+            getMenu();
+    }
+
+}
+
+void Menu::TSPtriangle() {
+    return;
+}
 
 
 
