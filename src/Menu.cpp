@@ -254,9 +254,37 @@ void Menu::basicTSPBacktrack() {
                 }
                 case 2: {
 
+                    std::vector<int> path;
+                    double cost = tsp.nearestNeighboor(tsp.toyGraphShipping, path);
+
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+                    cout << cost << endl;
+                    cout << endl;
+
+                    double cost2 = tsp.twoOpt(tsp.toyGraphShipping, path, cost);
+
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+                    cout << cost2 << endl;
                     break;
                 }
                 case 3: {
+
+                    cout << "Creating graph..." << endl;
+                    std::vector<int> path;
+                    tsp.nearestNeighboor(tsp.toyGraphShipping, path);
+                    double cost = tsp.simulatedAnnealing(tsp.toyGraphShipping, path);
+
+                    cout << "Path: " << endl;
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+
+                    cout << "Cost: "<< cost << endl;
+
 
                     break;
                 }
@@ -328,6 +356,13 @@ void Menu::basicTSPBacktrack() {
 }
 
 void Menu::TSPtriangle() {
+    unsigned int path[this->tsp.graph.getNumVertex()];
+    double cost = tsp.tspTriangleHeuristic(tsp.graph, path);
+
+    for (auto i: path){
+        cout << i << " -> " <<'\n';
+    }
+    cout << cost << endl;
     return;
 }
 

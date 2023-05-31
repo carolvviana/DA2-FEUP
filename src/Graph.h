@@ -36,6 +36,8 @@ public:
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
 
+    double getWeight(Vertex* v, Vertex* w);
+
 
 
     void minCostMST();

@@ -29,12 +29,12 @@ void TSP::createNodes(const std::string &filePath) {
     }
 
     /* Read the first line (labels) */
-    getline(file,line);
+    /*getline(file,line);
 
     if(line != "id,longitude,latitude"){
         cout << "Error reading file, wrong format of file" << endl;
         return;
-    }
+    }*/
 
     /* Read the rest of the file */
     while(getline(file, line)){
@@ -68,13 +68,14 @@ void TSP::createEdges(const string &filePath) {
     }
 
     /* Read the first line (labels) */
+    /*
     getline(file,line);
 
     if(line != "origem,destino,distancia"){
         cout << "Error reading file, wrong format of file" << endl;
         return;
     }
-
+*/
     /* Read the rest of the file */
     while(getline(file, line)){
         istringstream iss(line);
@@ -97,7 +98,7 @@ void TSP::createEdges(const string &filePath) {
 
 void TSP::createShipping() {
     ifstream file;
-    file.open("../data/Toy-Graphs/shipping.csv");
+    file.open("../data/Medium-Graphs/edges_25.csv");
     string line;
 
     /* Check if file is open */
@@ -107,12 +108,12 @@ void TSP::createShipping() {
     }
 
     /* Read the first line (labels) */
-    getline(file,line);
+    /*getline(file,line);
 
     if(line != "origem,destino,distancia"){
         cout << "Error reading file, wrong format of file" << endl;
         return;
-    }
+    }*/
 
     /* Read the rest of the file */
     while(getline(file, line)){
@@ -316,18 +317,73 @@ double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
     return minCost;
 }
 
-double TSP::simulatedAnnealing(Graph& chosen_graph, unsigned int* path, double initialTemperature,
+
+double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double initialTemperature,
                                 double coolingRate, int maxIterations){
 
-    unsigned int currentPath[chosen_graph.getVertexSet().size()];
-    randomTour(chosen_graph, currentPath);
+    //initialize path
+    vector<int> currentPath = path;
+   /* for(unsigned int i = 0; i < chosen_graph.getNumVertex(); i++){
+        currentPath.push_back(i);
+    }
+    currentPath.push_back(0);
 
-    double currentCost = calculatePathCost(chosen_graph, currentPath);
+    randomTour(chosen_graph, currentPath);*/
+    vector<int> bestPath = currentPath;
 
-    unsigned int bestPath[chosen_graph.getVertexSet().size()];
-    bestPath = currentPath;
+    //initialize cost
+    double currentCost = getPathCost(chosen_graph, currentPath);
+    double bestCost = currentCost;
+
+    //initialize temperature
+    const double minTemperature = 1e-6;
+    double temperature = initialTemperature;
+
+    //initialize random generator
+    std::mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<int> dist(1, chosen_graph.getVertexSet().size()-1);
+    std::uniform_real_distribution<double> prob(0.0, 1.0);
+
+    while(temperature > minTemperature){
+        for(int i = 0; i < maxIterations; i++){
+            //generate random neighbour
+            vector<int> newPath = currentPath;
+            int pos1 = dist(gen);
+            int pos2 = dist(gen);
+            while(pos1 == pos2){
+                pos2 = dist(gen);
+            }
 
 
+            swap(newPath[pos1], newPath[pos2]);
+
+            //calculate neighbour cost
+            double newCost = getPathCost(chosen_graph, newPath);
+
+            //calculate acceptance probability
+            double acceptanceProbability = exp((currentCost - newCost)/temperature);
+
+            //accept neighbour if it is better or with a certain probability if it is worse
+            if(newCost < currentCost || prob(gen) < acceptanceProbability){
+                currentPath = newPath;
+                currentCost = newCost;
+            }
+
+            //update best path
+            if(currentCost < bestCost){
+                bestPath = currentPath;
+                bestCost = currentCost;
+            }
+        }
+
+        //cool temperature
+        temperature *= coolingRate;
+    }
+    cout << "Best cost: " << bestCost << endl;
+
+    //return
+    path = bestPath;
+    return bestCost;
 }
 
 double TSP::calculatePathCost(Graph& graph, unsigned int* path){
@@ -371,15 +427,118 @@ double TSP::calculatePathCost(Graph& graph, unsigned int* path){
     return cost;
 }
 
-void TSP::randomTour(Graph& graph, unsigned int* path){
+void TSP::randomTour(Graph& graph, vector<int>& path){
     // obtain a time-based seed:
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    minstd_rand0 generator (seed);
+    auto rng = std::default_random_engine(seed);
 
-    //shuffle the path keeping the first index as 0
-    path[0] = 0;
-    shuffle(path+1, path+graph.getVertexSet().size(), generator);
+    //shuffle the path keeping the first and last index as 0
+    cout << "hello"  << endl;
+    path[0] = 0; //first
+    path[graph.getNumVertex()] = 0; //last
+    cout << "hello"  << endl;
+
+    //path[graph.getVertexSet().size()] = 0; //last
+    shuffle(path.begin()+1, path.end()-1, rng);
+    cout << "hello"  << endl;
+}
+
+
+double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
+    unordered_set<int> not_visited;
+    double cost = 0;
+    for (auto v: chosen_graph.getVertexSet()){
+        v->setVisited(false);
+        not_visited.insert(v->getId());
+    }
+
+    int current_stop = 0;
+    int last_stop = 0;
+    path.push_back(0);
+    chosen_graph.findVertex(0)->setVisited(true);
+    not_visited.erase(0);
+
+    while (!not_visited.empty()){
+        bool found = false;
+        int next_stop;
+        double min_distance = std::numeric_limits<double>::max();
+        for (auto e: chosen_graph.findVertex(current_stop)->getAdj()){
+            if (!e->getDest()->isVisited() && e->getWeight() < min_distance){
+                next_stop= e->getDest()->getId();
+                min_distance = e->getWeight();
+                found = true;
+            }
+        }
+
+        if (found){
+            cost += min_distance;
+            //std::cout << min_distance << "  :  " << cost << endl;
+            chosen_graph.findVertex(next_stop)->setVisited(true);
+            path.push_back(next_stop);
+            not_visited.erase(current_stop);
+            last_stop = current_stop;
+            current_stop = next_stop;
+        }
+        else break;
+    }
+    path.push_back(0);
+
+    for (auto e: chosen_graph.findVertex(current_stop)->getAdj()){
+        if (e->getDest()->getId() == 0){
+            cost+=e->getWeight();
+        }
+    }
+    return cost;
+}
+
+double TSP :: twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost){
+    std::vector<int> new_path;
+    double newCost;
+    double bestCost = prevCost;
+    int swaps = 1;
+
+    while (swaps != 0) { //until no improvements are being made.
+        swaps = 0;
+        for (int i = 1; i <= path.size() - 3 ; i++) {
+            for (int j = i+1; j <= path.size() - 2; j++ ){
+                if (   (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[i-1])))     +   (chosen_graph.getWeight(chosen_graph.findVertex(path[j+1]),chosen_graph.findVertex(path[j])))
+                                                >=     (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[j+1])))    +(chosen_graph.getWeight(chosen_graph.findVertex(path[i-1]),chosen_graph.findVertex(path[j])))){
+                    new_path = swapVertex(path, i, j);
+                    newCost = getPathCost(chosen_graph,new_path);
+                    if (newCost < bestCost) {
+                        path = new_path;
+                        bestCost = newCost;
+                        swaps++;
+                    }
+                }
+            }
+        }
+    }
+    return bestCost;
+}
+
+std::vector<int> TSP:: swapVertex(std::vector<int> &path, int i, int j){
+    std::vector<int> sol;
+    for (int c = 0; c <= i - 1; c++) {
+        sol.push_back(path[c]);
+    }
+    int count = 0;
+    for (int c = i; c <= j; c++) {
+        sol.push_back(path[j - count]);
+        count++;
+    }
+    for (int c = j + 1; c < path.size(); c++) {
+        sol.push_back(path[c]);
+    }
+    return sol;
 }
 
 
 
+double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
+    double cost = 0;
+    for (int i = 0; i < path.size()-1; i++){
+        cost += chosen_graph.getWeight(chosen_graph.findVertex(path[i]), chosen_graph.findVertex(path[i+1]));
+    }
+    return cost;
+}

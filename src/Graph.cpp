@@ -165,7 +165,13 @@ void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes) {
 
     visitedNodes.push_back(v);
 
+/*
     //visit in preorder
+    cost += v->getDist();
+    std::cout << v->getDist() << '\n';
+    std::cout << cost << '\n';
+    */
+
     for (auto w: vertexSet) {
         if (w->getPath() == v) {
             preOrderVisit(w, visitedNodes);
@@ -173,7 +179,12 @@ void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes) {
     }
 }
 
-/*bool Graph :: canGoBack(Vertex* v){
-    if (v->getAdj().empty() && v->getId() != 0) return false;
-
-}*/
+double Graph :: getWeight(Vertex* v, Vertex* w){
+    double weight = 0;
+    for (auto e: v->getAdj()){
+        if (e->getDest()->getId() == w->getId()){
+            weight = e->getWeight();
+        }
+    }
+    return weight;
+}

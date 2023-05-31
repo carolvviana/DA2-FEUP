@@ -42,15 +42,22 @@ public:
      * @param maxIterations - maximum number of iterations
      * @return cost of the tour
      */
-    double simulatedAnnealing(Graph& chosen_graph, unsigned int* path, double initialTemperature,
-                               double coolingRate, int maxIterations);
+    double simulatedAnnealing(Graph& chosen_graph, std::vector<int>& path, double initialTemperature = 1000.0,
+                               double coolingRate = 0.995, int maxIterations = 100);
+
+    double nearestNeighboor(Graph& chosen_graph, std::vector<int> &path);
+    double twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost);
+    std::vector<int> swapVertex(std::vector<int> &path, int i, int j);
+    double getPathCost(Graph& chosen_graph, std::vector<int> &path);
+
+
 
     /**
-     * @brief generates a random tour starting at node 0
+     * @brief generates a random tour starting and ending at node 0
      * @param graph - graph to generate the tour
      * @param path - path to store the tour
      */
-    static void randomTour(Graph& graph, unsigned int* path);
+    static void randomTour(Graph& graph, std::vector<int>& path);
 
     /**
      * @brief calculates the cost of a tour
