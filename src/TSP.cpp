@@ -301,5 +301,101 @@ double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
     return minCost;
 }
 
+double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
+    unordered_set<int> not_visited;
+    double cost = 0;
 
 
+    for (auto v: chosen_graph.getVertexSet()){
+        v->setVisited(false);
+        not_visited.insert(v->getId());
+    }
+
+    int current_stop = 0;
+    int last_stop = 0;
+    path.push_back(0);
+    chosen_graph.findVertex(0)->setVisited(true);
+    not_visited.erase(0);
+
+    while (!not_visited.empty()){
+        bool found = false;
+        int next_stop;
+        double min_distance = std::numeric_limits<double>::max();
+        for (auto e: chosen_graph.findVertex(current_stop)->getAdj()){
+            if (!e->getDest()->isVisited() && e->getWeight() < min_distance){
+                next_stop= e->getDest()->getId();
+                min_distance = e->getWeight();
+                found = true;
+            }
+        }
+
+        if (found){
+            cost += min_distance;
+            std::cout << min_distance << "  :  " << cost << endl;
+            chosen_graph.findVertex(next_stop)->setVisited(true);
+            path.push_back(next_stop);
+            not_visited.erase(current_stop);
+            last_stop = current_stop;
+            current_stop = next_stop;
+        }
+        else break;
+    }
+    path.push_back(0);
+
+    for (auto e: chosen_graph.findVertex(current_stop)->getAdj()){
+        if (e->getDest()->getId() == 0){
+            cost+=e->getWeight();
+        }
+    }
+    return cost;
+}
+
+double TSP :: twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost){
+    std::vector<int> new_path;
+    double newCost;
+    double bestCost = prevCost;
+    int swaps = 1;
+
+    while (swaps != 0) { //until no improvements are being made.
+        swaps = 0;
+        for (int i = 1; i <= path.size() - 3 ; i++) {
+            for (int j = i+1; j <= path.size() - 2; j++ ){
+                if (   (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[i-1])))     +   (chosen_graph.getWeight(chosen_graph.findVertex(path[j+1]),chosen_graph.findVertex(path[j])))
+                                                >=     (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[j+1])))    +(chosen_graph.getWeight(chosen_graph.findVertex(path[i-1]),chosen_graph.findVertex(path[j])))){
+                    new_path = swapVertex(path, i, j);
+                    newCost = getPathCost(chosen_graph,new_path);
+                    if (newCost < bestCost) {
+                        path = new_path;
+                        bestCost = newCost;
+                        swaps++;
+                    }
+                }
+            }
+        }
+    }
+    return bestCost;
+}
+
+std::vector<int> TSP:: swapVertex(std::vector<int> &path, int i, int j){
+    std::vector<int> sol;
+    for (int c = 0; c <= i - 1; c++) {
+        sol.push_back(path[c]);
+    }
+    int count = 0;
+    for (int c = i; c <= j; c++) {
+        sol.push_back(path[j - count]);
+        count++;
+    }
+    for (int c = j + 1; c < path.size(); c++) {
+        sol.push_back(path[c]);
+    }
+    return sol;
+}
+
+double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
+    double cost = 0;
+    for (int i = 0; i < path.size()-1; i++){
+        cost += chosen_graph.getWeight(chosen_graph.findVertex(path[i]), chosen_graph.findVertex(path[i+1]));
+    }
+    return cost;
+}

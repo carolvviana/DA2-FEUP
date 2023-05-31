@@ -254,6 +254,21 @@ void Menu::basicTSPBacktrack() {
                 }
                 case 2: {
 
+                    std::vector<int> path;
+                    double cost = tsp.nearestNeighboor(tsp.toyGraphStadiums, path);
+
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+                    cout << cost << endl;
+                    cout << endl;
+
+                    double cost2 = tsp.twoOpt(tsp.toyGraphStadiums, path, cost);
+
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+                    cout << cost2 << endl;
                     break;
                 }
                 case 3: {
@@ -328,6 +343,13 @@ void Menu::basicTSPBacktrack() {
 }
 
 void Menu::TSPtriangle() {
+    unsigned int path[this->tsp.graph.getNumVertex()];
+    double cost = tsp.tspTriangleHeuristic(tsp.graph, path);
+
+    for (auto i: path){
+        cout << i << " -> " <<'\n';
+    }
+    cout << cost << endl;
     return;
 }
 

@@ -33,6 +33,11 @@ public:
 
     double tspTriangleHeuristic(Graph& graph, unsigned int* path);
 
+    double nearestNeighboor(Graph& chosen_graph, std::vector<int> &path);
+    double twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost);
+    std::vector<int> swapVertex(std::vector<int> &path, int i, int j);
+    double getPathCost(Graph& chosen_graph, std::vector<int> &path);
+
 
 private:
 
