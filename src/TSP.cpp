@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <chrono>
+#include <random>
 #include "TSP.h"
 
 using namespace std;
@@ -276,13 +278,26 @@ double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
 double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
     vector<Vertex*> minPath;
     chosen_graph.minCostMST();
+    chosen_graph.preOrderVisit(chosen_graph.findVertex(0), minPath);
+
     double minCost = 0.0;
-    chosen_graph.preOrderVisit(chosen_graph.findVertex(0), minPath, true, minCost);
-    for (unsigned int i = 0; i < minPath.size(); i++) {
+
+    Vertex * previousVertex = minPath[0];
+    path[0] = minPath[0]->getId();
+    for(unsigned int i = 1; i< minPath.size(); i++){
+        for(Edge* e : minPath[i]->getAdj()) {
+            if (e->getDest() == previousVertex) {
+                minCost += e->getWeight();
+            } else {
+                minCost += calculateDistance(previousVertex->getCoords().lat, previousVertex->getCoords().lon,
+                                             minPath[i]->getCoords().lat, minPath[i]->getCoords().lon);
+            }
+        }
+        previousVertex = minPath[i];
         path[i] = minPath[i]->getId();
     }
 
-    //distance from last to first
+    //distance from last to first vertex
     Vertex* lastVertex = minPath.back();
     Vertex* firstVertex = chosen_graph.findVertex(0);
 
@@ -299,6 +314,71 @@ double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
     }
 
     return minCost;
+}
+
+double TSP::simulatedAnnealing(Graph& chosen_graph, unsigned int* path, double initialTemperature,
+                                double coolingRate, int maxIterations){
+
+    unsigned int currentPath[chosen_graph.getVertexSet().size()];
+    randomTour(chosen_graph, currentPath);
+
+    double currentCost = calculatePathCost(chosen_graph, currentPath);
+
+    unsigned int bestPath[chosen_graph.getVertexSet().size()];
+    bestPath = currentPath;
+
+
+}
+
+double TSP::calculatePathCost(Graph& graph, unsigned int* path){
+    double cost = 0.0;
+
+    for(unsigned int i = 0; i < graph.getVertexSet().size()-1; i++){
+        Vertex* v1 = graph.findVertex(path[i]);
+        Vertex* v2 = graph.findVertex(path[i+1]);
+
+        bool foundEdge = false;
+        for(Edge* e : v1->getAdj()){
+            if(e->getDest() == v2){
+                cost += e->getWeight();
+                foundEdge = true;
+                break;
+            }
+        }
+
+        if(!foundEdge){
+            cost += calculateDistance(v1->getCoords().lat, v1->getCoords().lon, v2->getCoords().lat, v2->getCoords().lon);
+        }
+    }
+
+    //distance from last to first vertex
+    Vertex* lastVertex = graph.findVertex(path[graph.getVertexSet().size()-1]);
+    Vertex* firstVertex = graph.findVertex(path[0]);
+
+    bool foundEdge = false;
+    for(Edge* e : lastVertex->getAdj()){
+        if(e->getDest() == firstVertex){
+            cost += e->getWeight();
+            foundEdge = true;
+            break;
+        }
+    }
+
+    if(!foundEdge){
+        cost += calculateDistance(lastVertex->getCoords().lat, lastVertex->getCoords().lon, firstVertex->getCoords().lat, firstVertex->getCoords().lon);
+    }
+
+    return cost;
+}
+
+void TSP::randomTour(Graph& graph, unsigned int* path){
+    // obtain a time-based seed:
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    minstd_rand0 generator (seed);
+
+    //shuffle the path keeping the first index as 0
+    path[0] = 0;
+    shuffle(path+1, path+graph.getVertexSet().size(), generator);
 }
 
 

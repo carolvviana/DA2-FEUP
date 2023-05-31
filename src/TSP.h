@@ -33,7 +33,32 @@ public:
 
     double tspTriangleHeuristic(Graph& graph, unsigned int* path);
 
+    /**
+     * @brief applies the Simulated Annealing algorithm to find the best tour
+     * @param chosen_graph - graph to apply the Simulated Annealing algorithm
+     * @param path - path to store the tour
+     * @param initialTemperature - initial temperature
+     * @param coolingRate - cooling rate
+     * @param maxIterations - maximum number of iterations
+     * @return cost of the tour
+     */
+    double simulatedAnnealing(Graph& chosen_graph, unsigned int* path, double initialTemperature,
+                               double coolingRate, int maxIterations);
 
+    /**
+     * @brief generates a random tour starting at node 0
+     * @param graph - graph to generate the tour
+     * @param path - path to store the tour
+     */
+    static void randomTour(Graph& graph, unsigned int* path);
+
+    /**
+     * @brief calculates the cost of a tour
+     * @param graph - graph to calculate the cost
+     * @param path - path to calculate the cost
+     * @return - cost of the tour
+     */
+    static double calculatePathCost(Graph& graph, unsigned int* path);
 private:
 
 
