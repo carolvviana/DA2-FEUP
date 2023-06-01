@@ -164,25 +164,23 @@ void Graph::minCostMST() {
     }
 }
 
-void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes, bool firstVisit, double& cost) {
-    if (firstVisit){
-        for (auto ver: vertexSet) {
-            ver->setVisited(false);
-        }
-    }
-
+void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes) {
     if (v == nullptr) {
-        cost = 0;
         return;
     }
 
     visitedNodes.push_back(v);
+
+/*
+    //visit in preorder
     cost += v->getDist();
     std::cout << v->getDist() << '\n';
     std::cout << cost << '\n';
+    */
+
     for (auto w: vertexSet) {
         if (w->getPath() == v) {
-            preOrderVisit(w, visitedNodes, false, cost);
+            preOrderVisit(w, visitedNodes);
         }
     }
 }

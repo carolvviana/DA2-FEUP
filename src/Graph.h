@@ -42,7 +42,8 @@ public:
 
 
     void minCostMST();
-    void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes, bool firstVisit, double& cost);
+
+    void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes);
 
     std::vector<Vertex*> findOddDegree();
     void perfectMatching();

@@ -255,7 +255,7 @@ void Menu::basicTSPBacktrack() {
                 case 2: {
 
                     std::vector<int> path;
-                    double cost = tsp.nearestNeighboor(tsp.toyGraphStadiums, path);
+                    double cost = tsp.nearestNeighboor(tsp.toyGraphShipping, path);
 
                     for (auto i: path){
                         cout << i << " -> " <<'\n';
@@ -263,7 +263,7 @@ void Menu::basicTSPBacktrack() {
                     cout << cost << endl;
                     cout << endl;
 
-                    double cost2 = tsp.twoOpt(tsp.toyGraphStadiums, path, cost);
+                    double cost2 = tsp.twoOpt(tsp.toyGraphShipping, path, cost);
 
                     for (auto i: path){
                         cout << i << " -> " <<'\n';
@@ -272,6 +272,24 @@ void Menu::basicTSPBacktrack() {
                     break;
                 }
                 case 3: {
+
+                    cout << "Creating graph..." << endl;
+                    std::vector<int> path;
+                    tsp.nearestNeighboor(tsp.toyGraphShipping, path);
+                    double cost = tsp.simulatedAnnealing(tsp.toyGraphShipping, path);
+
+                    cout << "Path: " << endl;
+                    for (auto i: path){
+                        cout << i << " -> " <<'\n';
+                    }
+
+                    cout << "Cost: "<< cost << endl;
+
+                    break;
+
+                }
+                case 4: {
+
                     std::vector<Vertex*> path_christ;
                     double cost2 = tsp.christofides(tsp.toyGraphStadiums, path_christ);
 
@@ -279,10 +297,6 @@ void Menu::basicTSPBacktrack() {
                         cout << i->getId() << " -> " <<'\n';
                     }
                     cout << cost2 << endl;
-                    break;
-
-                }
-                case 4: {
 
                     break;
                 }
