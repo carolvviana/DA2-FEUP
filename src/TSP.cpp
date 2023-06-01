@@ -399,3 +399,38 @@ double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
     }
     return cost;
 }
+
+double TSP::getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path){
+    double cost = 0;
+    for (int i = 0; i < path.size()-1; i++){
+        cost += chosen_graph.getWeight(path[i], path[i+1]);
+    }
+    return cost;
+}
+
+double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
+    chosen_graph.minCostMST();
+
+    chosen_graph.perfectMatching();
+
+    // Loop through each index and find shortest path
+    /*double best = std::numeric_limits<double>::max();
+    int bestIndex;
+    for (long t = 0; t < chosen_graph.getNumVertex(); t++) {
+        double result = chosen_graph.findBestPath(t);
+
+       /* tsp.path_vals[t][0] = t; // set start
+        tsp.path_vals[t][1] = result; // set end*/
+
+   /*     if (result < best) {
+            bestIndex = t;
+            best = result;
+        }
+    }*/
+
+    chosen_graph.eulerTour(0,path);
+    double min_cost = getPathCost(chosen_graph, path);
+    //chosen_graph.makeHamiltonian(path, min_cost);
+
+    return min_cost;
+}

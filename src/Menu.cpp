@@ -272,8 +272,15 @@ void Menu::basicTSPBacktrack() {
                     break;
                 }
                 case 3: {
+                    std::vector<Vertex*> path_christ;
+                    double cost2 = tsp.christofides(tsp.toyGraphStadiums, path_christ);
 
+                    for (auto i: path_christ){
+                        cout << i->getId() << " -> " <<'\n';
+                    }
+                    cout << cost2 << endl;
                     break;
+
                 }
                 case 4: {
 

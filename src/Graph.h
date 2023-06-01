@@ -8,6 +8,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_set>
+#include <stack>
 //#include "../data_structures/MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
@@ -42,6 +43,13 @@ public:
 
     void minCostMST();
     void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes, bool firstVisit, double& cost);
+
+    std::vector<Vertex*> findOddDegree();
+    void perfectMatching();
+    void eulerTour(int start, std::vector<Vertex*> &path);
+    void makeHamiltonian(std::vector<Vertex*> &path, double &pathCost);
+    double findBestPath(int start);
+
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set

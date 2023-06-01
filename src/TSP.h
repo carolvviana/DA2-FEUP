@@ -37,6 +37,9 @@ public:
     double twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost);
     std::vector<int> swapVertex(std::vector<int> &path, int i, int j);
     double getPathCost(Graph& chosen_graph, std::vector<int> &path);
+    double getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path);
+
+    double christofides(Graph& chosen_graph, std::vector<Vertex*> &path);
 
 
 private:

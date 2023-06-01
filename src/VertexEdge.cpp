@@ -54,6 +54,16 @@ bool Vertex::removeEdge(int destID) {
     return removedEdge;
 }
 
+void Vertex::addChild(Vertex* v){
+    children.push_back(v);
+}
+void Vertex::removeChild(int i) {
+    children.erase(children.begin() + i);
+}
+void Vertex::removeLastChild(){
+    children.pop_back();
+}
+
 bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
@@ -65,6 +75,27 @@ int Vertex::getId() const {
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
+
+
+std::vector<Vertex *> Vertex::getChildren() const{
+    return this->children;
+}
+
+int Vertex:: getDeletedSize() const{
+    int count = 0;
+    for (auto e: this->adj){
+        if (e->getDeleted() == true) count++;
+    }
+    return count;
+}
+int Vertex:: getNotDeletedSize() const{
+    int count = 0;
+    for (auto e: this->adj){
+        if (e->getDeleted() == false) count++;
+    }
+    return count;
+}
+
 std::set<Edge*> Vertex::getAdjSet() const {
     return this->adjSet;
 }
@@ -88,6 +119,10 @@ double Vertex::getDist() const {
 
 Vertex* Vertex::getPath() const {
     return this->path;
+}
+
+Vertex* Vertex::getPerfectMatch() const {
+    return this->perfect_match;
 }
 
 std::vector<Edge *> Vertex::getIncoming() const {
@@ -116,6 +151,10 @@ void Vertex::setDist(double dist) {
 
 void Vertex::setPath(Vertex *path) {
     this->path = path;
+}
+
+void Vertex::setPerfectMatch(Vertex *perfect_match){
+    this->perfect_match = perfect_match;
 }
 
 Coordinates Vertex::getCoords() const {
@@ -177,4 +216,12 @@ void Edge::setReverse(Edge *reverse) {
 
 void Edge::setFlow(double flow) {
     this->flow = flow;
+}
+
+bool Edge::getDeleted() const{
+    return this->deleted;
+}
+
+void Edge::deleteEdge(){
+    this->deleted = true;
 }

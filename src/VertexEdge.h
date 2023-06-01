@@ -28,6 +28,8 @@ public:
 
     int getId() const;
     std::vector<Edge *> getAdj() const;
+    int getDeletedSize() const;
+    int getNotDeletedSize() const;
     std::set<Edge *> getAdjSet() const;
     std::vector<Vertex *> getAdjNodes() const;
     bool isVisited() const;
@@ -35,7 +37,9 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     Vertex* getPath() const;
+    Vertex* getPerfectMatch() const;
     std::vector<Edge *> getIncoming() const;
+    std::vector<Vertex *> getChildren() const;
     Coordinates getCoords() const;
 
     void setId(int info);
@@ -44,10 +48,15 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Vertex *path);
+    void setPerfectMatch(Vertex *path);
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(int destID);
     void setCoords(double lat, double lon);
     void setLabel(std::string label);
+    void addChild(Vertex* v);
+    void removeChild(int i);
+    void removeLastChild();
+
 
     int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
 
@@ -62,6 +71,8 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     Vertex *path = nullptr;
+    std::vector<Vertex*> children;
+    Vertex* perfect_match = nullptr;
 
     Coordinates coords;
     std::string label;
@@ -83,12 +94,12 @@ public:
     Vertex * getOrig() const;
     Edge *getReverse() const;
     double getFlow() const;
+    bool getDeleted() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
-
-    bool operator<(Vertex &other);
+    void deleteEdge();
 
 protected:
     Vertex * dest; // destination vertex
@@ -100,6 +111,7 @@ protected:
     // used for bidirectional edges
     Vertex *orig;
     Edge *reverse = nullptr;
+    bool deleted = false;
 
     double flow; // for flow-related problem
 };
