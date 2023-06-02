@@ -24,6 +24,9 @@ public:
     Graph toyGraphStadiums;
     Graph toyGraphTourism;
 
+    /**
+     * @brief creates Graph based on csv file - specific for toruism graph
+     */
     void createTourism();
 
     /**
@@ -95,21 +98,59 @@ public:
                                double coolingRate = 0.995, int maxIterations = 100);
 
     /**
-     * @brief algorithm
-     * @param chosen_graph - graph to apply the Simulated Annealing algorithm
+     * @brief Nearest neighboor algorithm - constructs path by finding the nearest node that hasn't yet been visited
+     * @param chosen_graph - graph to apply the algorithm
      * @param path - path to store the tour
-     * @param initialTemperature - initial temperature
-     * @param coolingRate - cooling rate
-     * @param maxIterations - maximum number of iterations
      * @return cost of the tour
-     * Time Complexity:
+     * Time Complexity: O(V + E)
      */
     double nearestNeighboor(Graph& chosen_graph, std::vector<int> &path);
+
+    /**
+     * @brief 2-opt optimization algorithm - is given a path and optimizes it by switching to edges at a time (if it results in smaller cost)
+     * @param chosen_graph - graph to apply the algorithm
+     * @param path - path to store the tour
+     * @param prevCost - initial cost of the path (before the optimization)
+     * @return cost of the tour
+     * Time Complexity: O(V^2)
+     */
     double twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCost);
+
+    /**
+     * @brief swaps two nodes in a path
+     * @param path - path where the nodes are being swapped
+     * @param i - index to swap
+     * @param j - index to swap
+     * @return path with elements swapped
+     * Time Complexity: O(1)
+     */
     std::vector<int> swapVertex(std::vector<int> &path, int i, int j);
+
+    /**
+     * @brief calculates the total cost of a given path
+     * @param chosen_graph - graph where the path belongs
+     * @param path - path (of nodes' ids) that we want to know the cost of
+     * @return cost of path
+     * Time Complexity: O(n)
+     */
     double getPathCost(Graph& chosen_graph, std::vector<int> &path);
+
+    /**
+     * @brief calculates the total cost of a given path
+     * @param chosen_graph - graph where the path belongs
+     * @param path - path (of nodes themselves) that we want to know the cost of
+     * @return cost of path
+     * Time Complexity: O(n)
+     */
     double getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path);
 
+    /**
+     * @brief christofides algorithm - combines MST and a minimum-weight perfect matching tree
+     * @param chosen_graph - graph to apply the algorithm
+     * @param path - where to store the final path
+     * @return cost of path
+     * Time Complexity: O(V^3)
+     */
     double christofides(Graph& chosen_graph, std::vector<Vertex*> &path);
 
 

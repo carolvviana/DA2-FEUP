@@ -54,6 +54,7 @@ public:
     void setCoords(double lat, double lon);
     void setLabel(std::string label);
     void addChild(Vertex* v);
+    void clearChildren();
     void removeChild(int i);
     void removeLastChild();
 
@@ -72,6 +73,10 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     Vertex *path = nullptr;
+
+    /**
+     * @brief used in Prim's algorithm, stores all nodes connected to that node
+     */
     std::vector<Vertex*> children;
     Vertex* perfect_match = nullptr;
 

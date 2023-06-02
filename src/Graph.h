@@ -16,25 +16,22 @@
 class Graph {
 public:
     ~Graph();
+
     /*
     * Auxiliary function to find a vertex with a given ID.
     */
     Vertex *findVertex(const int &id) const;
+
     /*
      *  Adds a vertex with a given content or info (in) to a graph (this).
      *  Returns true if successful, and false if a vertex with that content already exists.
      */
     bool addVertex(const int &id, double lat, double lon);
 
-    /*
-     * Adds an edge to a graph (this), given the contents of the source and
-     * destination vertices and the edge weight (w).
-     * Returns true if successful, and false if the source or destination vertex does not exist.
-     */
-    bool addEdge(const int &sourc, const int &dest, double w);
     bool addBidirectionalEdge(const int &sourc, const int &dest, double w);
 
     int getNumVertex() const;
+
     std::vector<Vertex *> getVertexSet() const;
 
     double getWeight(Vertex* v, Vertex* w);
@@ -46,12 +43,8 @@ public:
     void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes);
 
     std::vector<Vertex*> findOddDegree();
-    std::set<Edge*> perfectMatching(const std::vector<Vertex*>& vertices);
-    void eulerTour(int start, std::vector<Vertex*> &path);
-    void makeHamiltonian(std::vector<Vertex*> &path, double &pathCost);
-    double findBestPath(int start);
 
-    void findEulerCircuit(std::set<Edge*> &combine_graph, int startVertex, std::vector<Vertex*> &euler_path);
+    std::set<Edge*> perfectMatching(const std::vector<Vertex*>& vertices);
 
 
 protected:

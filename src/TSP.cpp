@@ -349,7 +349,7 @@ double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
     }
 
     int current_stop = 0;
-    //int last_stop = 0;
+    int last_stop = 0;
     path.push_back(0);
     chosen_graph.findVertex(0)->setVisited(true);
     not_visited.erase(0);
@@ -371,7 +371,7 @@ double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
             chosen_graph.findVertex(next_stop)->setVisited(true);
             path.push_back(next_stop);
             not_visited.erase(current_stop);
-            //last_stop = current_stop;
+            last_stop = current_stop;
             current_stop = next_stop;
         }
         else break;
@@ -399,6 +399,8 @@ double TSP :: twoOpt(Graph& chosen_graph, std::vector<int> &path, double prevCos
                 if (   (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[i-1])))     +   (chosen_graph.getWeight(chosen_graph.findVertex(path[j+1]),chosen_graph.findVertex(path[j])))
                                                 >=     (chosen_graph.getWeight(chosen_graph.findVertex(path[i]),chosen_graph.findVertex(path[j+1])))    +(chosen_graph.getWeight(chosen_graph.findVertex(path[i-1]),chosen_graph.findVertex(path[j])))){
                     new_path = swapVertex(path, i, j);
+                    //new_path = path;
+                    //swap(new_path[i],new_path[j]);
                     newCost = getPathCost(chosen_graph,new_path);
                     if (newCost < bestCost) {
                         path = new_path;
@@ -426,6 +428,7 @@ std::vector<int> TSP:: swapVertex(std::vector<int> &path, int i, int j){
         sol.push_back(path[c]);
     }
     return sol;
+    //swap(path[i], path[j]);
 }
 
 double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){

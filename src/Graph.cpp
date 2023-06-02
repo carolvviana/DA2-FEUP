@@ -42,19 +42,6 @@ bool Graph::addVertex(const int &id, double lat, double lon) {
     return true;
 }
 
-/*
- * Adds an edge to a graph (this), given the contents of the source and
- * destination vertices and the edge weight (w).
- * Returns true if successful, and false if the source or destination vertex does not exist.
- */
-bool Graph::addEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    v1->addEdge(v2, w);
-    return true;
-}
 
 bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     auto v1 = findVertex(sourc);
@@ -114,6 +101,7 @@ std::set<Edge*> Graph::minCostMST() {
         v->setDist(INF);
         v->setPath(nullptr);
         v->setVisited(false);
+        v->clearChildren();
     }
     // start with an arbitrary vertex
     Vertex* s = vertexSet.front();
@@ -292,117 +280,5 @@ std::set<Edge*> Graph::perfectMatching(const std::vector<Vertex*>& vertices) { /
     }
 
     return matching;
-}
-
-//find an euler circuit
-void Graph::eulerTour(int start, std:: vector<Vertex*> &path){
-    int deleted = 0;
-    std::stack<int> stack;
-    int pos = start;
-    path.push_back(vertexSet[start]);
-    while(!stack.empty() || !vertexSet[pos]->getChildren().empty() ){
-        //Current node has no neighbors
-        if (vertexSet[pos]->getChildren().empty()){
-            //add to circuit
-            path.push_back(vertexSet[pos]);
-            //remove last vertex from stack and set it to current
-            pos = stack.top();
-            stack.pop();
-        }
-            //If current node has neighbors
-        else{
-            //Add vertex to stack
-            stack.push(pos);
-            //Take a neighbor
-            int neighbor = vertexSet[pos]->getChildren().back()->getId(); // este é um id, nao uma posição
-            //Remove edge between neighbor and current vertex
-            vertexSet[pos]->removeLastChild();
-            //deleted++;
-
-            for(int i = 0; i < findVertex(neighbor)->getChildren().size(); i++){
-                if(findVertex(neighbor)->getChildren()[i] == findVertex(pos)){
-                    findVertex(neighbor)->removeChild(i);
-                }
-            }
-            //Set neighbor as current vertex
-            pos = findVertexIdx(neighbor);
-        }
-    }
-    path.push_back(vertexSet[pos]);
-}
-
-
-void Graph:: findEulerCircuit(std::set<Edge*> &combine_graph, int startVertex, std::vector<Vertex*> &euler_path) {
-    std::stack<int> circuit;
-    circuit.push(startVertex);
-    std::set<Edge*> visited;
-
-    while (!circuit.empty()) {
-        int currentVertex = circuit.top();
-
-        bool found = false;
-        for (auto it = combine_graph.begin(); it != combine_graph.end(); ++it) {
-            Edge* edge = *it;
-            if ((edge->getOrig()->getId() == currentVertex) && (visited.find(edge) == visited.end())) {
-                visited.insert(edge);
-                circuit.push(edge->getDest()->getId());
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            euler_path.push_back(findVertex(circuit.top()));
-            circuit.pop();
-        }
-    }
-    // Output the Euler circuit
-    /*while (!circuit.empty()) {
-        euler_path.push_back(findVertex(circuit.top()));
-        circuit.pop();
-    }*/
-}
-
-//Make euler tour Hamiltonian
-void Graph::makeHamiltonian(std::vector<Vertex*> &path, double &pathCost){
-
-    //remove visited nodes from Euler tour
-    for(auto v: vertexSet){
-        v->setVisited(false);
-    }
-
-    pathCost = 0;
-
-    Vertex* root = path.front();
-    auto cur = path.begin();
-    auto iter = path.begin()+1;
-    root->setVisited(true);
-
-    //iterate through circuit
-    bool addMore = true;
-    while(iter != path.end()){
-        if(!((*iter)->isVisited())){
-            pathCost += getWeight(*cur, *iter);
-            cur = iter;
-            (*cur)->setVisited(true);
-            iter = cur++;
-        }
-        else{
-            iter = path.erase(iter);
-        }
-    }
-    //Add distance to root
-    if ( iter != path.end() ){
-        pathCost += getWeight(*cur, *iter);
-    }
-}
-
-double Graph::findBestPath(int start){
-    std:: vector<Vertex*> path;
-    eulerTour(start, path);
-    double length;
-
-    makeHamiltonian(path, length);
-    return length;
 }
 

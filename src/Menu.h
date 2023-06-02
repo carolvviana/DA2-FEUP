@@ -22,8 +22,11 @@ enum MenuState{
     BACKTRACK_TSP_TOY,
     BACKTRACK_TSP_MEDIUM,
     TRIANGLE_TSP_TOY,
+    TRIANGLE_TSP_MEDIUM,
+    TRIANGLE_TSP_REAL_WORLD,
     BACKTRACK_TSP_REAL_WORLD,
-    HEURISTICS_TSP_TOY
+    HEURISTICS_TSP_TOY,
+    HEURISTICS_TSP_MEDIUM
 };
 
 /*
@@ -71,7 +74,13 @@ private:
 
     void basicTSPTriangleToy();
 
+    void basicTSPTriangleMedium();
+
+    void basicTSPTriangleRealWorld();
+
     void heuristicsTSPToy();
+
+    void heuristicsTSPMedium();
 public:
     /**
      * Constructor of Menu class

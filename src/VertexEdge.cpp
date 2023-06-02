@@ -57,6 +57,9 @@ bool Vertex::removeEdge(int destID) {
 void Vertex::addChild(Vertex* v){
     children.push_back(v);
 }
+void Vertex::clearChildren(){
+    children.clear();
+}
 void Vertex::removeChild(int i) {
     children.erase(children.begin() + i);
 }
