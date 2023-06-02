@@ -8,6 +8,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_set>
+#include <stack>
 //#include "../data_structures/MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
@@ -40,9 +41,18 @@ public:
 
     void clearGraph();
 
-    void minCostMST();
+    std::set<Edge*>  minCostMST();
 
     void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes);
+
+    std::vector<Vertex*> findOddDegree();
+    std::set<Edge*> perfectMatching(const std::vector<Vertex*>& vertices);
+    void eulerTour(int start, std::vector<Vertex*> &path);
+    void makeHamiltonian(std::vector<Vertex*> &path, double &pathCost);
+    double findBestPath(int start);
+
+    void findEulerCircuit(std::set<Edge*> &combine_graph, int startVertex, std::vector<Vertex*> &euler_path);
+
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set

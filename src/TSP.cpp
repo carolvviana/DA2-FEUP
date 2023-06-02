@@ -38,7 +38,6 @@ void TSP::createNodes(Graph& chosen_graph, const std::string &filePath) {
         return;
     }
 
-
     /* Read the rest of the file */
     while(getline(file, line)){
         istringstream iss(line);
@@ -70,15 +69,13 @@ void TSP::createEdges(Graph& chosen_graph, const string &filePath) {
         return;
     }
 
+    /* Read the first line (labels) */
+    getline(file,line);
 
-        /* Read the first line (labels) */
-        getline(file,line);
-
-        if(line != "origem,destino,distancia"){
-            cout << "Error reading file, wrong format of file" << endl;
-            return;
-        }
-
+    if(line != "origem,destino,distancia"){
+        cout << "Error reading file, wrong format of file" << endl;
+        return;
+    }
 
     /* Read the rest of the file */
     while(getline(file, line)){
@@ -439,6 +436,7 @@ double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
     return cost;
 }
 
+
 TSP::~TSP() {
     cout << "TSP destructor called" << endl;
     graph.clearGraph();
@@ -447,3 +445,118 @@ TSP::~TSP() {
     toyGraphShipping.clearGraph();
     toyGraphStadiums.clearGraph();
 }
+
+double TSP::getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path){
+    double cost = 0;
+    for (int i = 0; i < path.size()-1; i++){
+        cost += chosen_graph.getWeight(path[i], path[i+1]);
+    }
+    return cost;
+}
+
+/*double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
+    chosen_graph.minCostMST();
+
+    chosen_graph.perfectMatching();
+
+    // Loop through each index and find shortest path
+    /*double best = std::numeric_limits<double>::max();
+    int bestIndex;
+    for (long t = 0; t < chosen_graph.getNumVertex(); t++) {
+        double result = chosen_graph.findBestPath(t);
+
+       /* tsp.path_vals[t][0] = t; // set start
+        tsp.path_vals[t][1] = result; // set end*/
+
+   /*     if (result < best) {
+            bestIndex = t;
+            best = result;
+        }
+    }*/
+
+   /* chosen_graph.eulerTour(0,path);
+    double min_cost = getPathCost(chosen_graph, path);
+    //chosen_graph.makeHamiltonian(path, min_cost);
+
+    return min_cost;
+}*/
+
+double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
+    std::set<Edge*> mst = chosen_graph.minCostMST();
+    std::vector<Vertex*> odds = chosen_graph.findOddDegree();
+    std::set<Edge*> matching = chosen_graph.perfectMatching(odds);
+
+    std::set<Edge*> combine_graph;
+    for (auto e: mst){
+        if (combine_graph.find(e)==combine_graph.end()){ // se ainda nao estiver lá
+            combine_graph.insert(e);
+            combine_graph.insert(e->getDest()->addEdge(e->getOrig(),e->getWeight()));
+        }
+    }
+    bool reverse=false;
+    for (auto edge:matching){
+        if (combine_graph.find(edge)==combine_graph.end()){
+            combine_graph.insert(edge);
+            combine_graph.insert(edge->getDest()->addEdge(edge->getOrig(),edge->getWeight()));
+        }
+    }
+    Vertex* start = chosen_graph.getVertexSet()[0];
+    std::vector<Vertex*> euler_path;
+    //chosen_graph.findEulerCircuit(combine_graph, 0, euler_path);
+
+       bool once=false;
+       bool twice=false;
+       bool third=false;
+       while (!combine_graph.empty()) {
+           Vertex* current = start;
+           Vertex* next = nullptr;
+
+           do {
+               euler_path.push_back(current);
+               Edge* edge = nullptr;
+
+               for (Edge* e : current->getAdj()) {
+                   if (combine_graph.find(e) != combine_graph.end()) { // se a edge está no multigraph podemos continuar
+                       edge = e;
+                       break;
+                   }
+               }
+
+               if (edge != nullptr) {
+                   for (auto edge2: edge->getDest()->getAdj()){
+                       if (edge2->getDest()==edge->getOrig()){
+                           combine_graph.erase(edge2);
+                       }
+                   }
+                   next = edge->getDest();
+                   combine_graph.erase(edge);
+                   once=false;
+                   twice=false;
+               } else {
+                   next = nullptr;
+                   once=true;
+                   if (once) twice=true;
+                   else if (twice) third=true;
+               }
+
+               current = next;
+           } while (!third && next != start && current!= nullptr );
+       }
+
+
+
+    std::set<Vertex*> visited;
+
+    for (Vertex* vertex : euler_path) {
+        if (visited.find(vertex) == visited.end()) {
+            path.push_back(vertex);
+            visited.insert(vertex);
+        }
+    }
+   // chosen_graph.eulerTour(0,path);
+    double min_cost = getPathCost(chosen_graph, path);
+    //chosen_graph.makeHamiltonian(path, min_cost);
+
+    return min_cost;
+}
+
