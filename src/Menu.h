@@ -7,6 +7,7 @@
 
 #include <stack>
 #include <iostream>
+#include <chrono>
 #include "TSP.h"
 
 /*
@@ -16,7 +17,13 @@ enum MenuState{
     INIT_MENU, // Initial menu
     MAIN_MENU, // Main menu
     BASIC_TSP_BACKTRACK,// To add more menus, just add here
-    TSP_TRIANGLE_HEURISTIC
+    TSP_TRIANGLE_HEURISTIC,
+    TSP_OUR_HEURISTICS,
+    BACKTRACK_TSP_TOY,
+    BACKTRACK_TSP_MEDIUM,
+    TRIANGLE_TSP_TOY,
+    BACKTRACK_TSP_REAL_WORLD,
+    HEURISTICS_TSP_TOY
 };
 
 /*
@@ -39,7 +46,7 @@ private:
     /**
      * @var option - option selected by user
      */
-    int option{};
+    int option;
 
     /**
      * @brief Initial menu of application
@@ -54,6 +61,17 @@ private:
 
     void clearStack();
 
+    void ourHeuristics();
+
+    void basicTSPBacktrackToy();
+
+    void basicTSPBacktrackMedium();
+
+    void basicTSPBacktrackRealWorld();
+
+    void basicTSPTriangleToy();
+
+    void heuristicsTSPToy();
 public:
     /**
      * Constructor of Menu class

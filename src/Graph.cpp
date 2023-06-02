@@ -188,3 +188,23 @@ double Graph :: getWeight(Vertex* v, Vertex* w){
     }
     return weight;
 }
+
+
+void Graph::clearGraph() {
+    // Delete edges
+    for (auto vertex : this->vertexSet) {
+        for (auto edge : vertex->adj) {
+            delete edge;
+        }
+        vertex->adj.clear();
+        vertex->adjSet.clear();
+        vertex->incoming.clear();
+    }
+
+    // Delete vertices
+    for (auto vertex : this->vertexSet) {
+        delete vertex;
+    }
+    this->vertexSet.clear();
+
+}

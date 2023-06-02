@@ -36,6 +36,7 @@ cmake-build-debug
 
 #Big files
 data/Real-World-Graphs
+data/Real-world Graphs
 
 #Clion files
 .idea

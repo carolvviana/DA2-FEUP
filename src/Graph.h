@@ -38,7 +38,7 @@ public:
 
     double getWeight(Vertex* v, Vertex* w);
 
-
+    void clearGraph();
 
     void minCostMST();
 

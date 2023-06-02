@@ -14,27 +14,30 @@
 using namespace std;
 
 TSP::TSP() {
-    createShipping(); createStadiums(); createTourism();
+    createGraph(toyGraphShipping, "../data/Toy-Graphs/shipping.csv", true);
+    createGraph(toyGraphStadiums, "../data/Toy-Graphs/stadiums.csv", true);
+    createTourism();
 }
 
-void TSP::createNodes(const std::string &filePath) {
+void TSP::createNodes(Graph& chosen_graph, const std::string &filePath) {
     ifstream file;
     file.open(filePath);
     string line;
 
     /* Check if file is open */
     if(!file.is_open()){
-        cout << "Error opening file" << endl;
+        cout << "Error opening file, wrong file path" << endl;
         return;
     }
 
     /* Read the first line (labels) */
-    /*getline(file,line);
+    getline(file,line);
 
     if(line != "id,longitude,latitude"){
         cout << "Error reading file, wrong format of file" << endl;
         return;
-    }*/
+    }
+
 
     /* Read the rest of the file */
     while(getline(file, line)){
@@ -52,11 +55,11 @@ void TSP::createNodes(const std::string &filePath) {
             *label = labelData;
         }
 
-        graph.addVertex(stoi(id), stod(lat), stod(lon));
+        chosen_graph.addVertex(stoi(id), stod(lat), stod(lon));
     }
 }
 
-void TSP::createEdges(const string &filePath) {
+void TSP::createEdges(Graph& chosen_graph, const string &filePath) {
     ifstream file;
     file.open(filePath);
     string line;
@@ -67,15 +70,16 @@ void TSP::createEdges(const string &filePath) {
         return;
     }
 
-    /* Read the first line (labels) */
-    /*
-    getline(file,line);
 
-    if(line != "origem,destino,distancia"){
-        cout << "Error reading file, wrong format of file" << endl;
-        return;
-    }
-*/
+        /* Read the first line (labels) */
+        getline(file,line);
+
+        if(line != "origem,destino,distancia"){
+            cout << "Error reading file, wrong format of file" << endl;
+            return;
+        }
+
+
     /* Read the rest of the file */
     while(getline(file, line)){
         istringstream iss(line);
@@ -92,13 +96,13 @@ void TSP::createEdges(const string &filePath) {
             *label = labelData;
         }
 
-        graph.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
+        chosen_graph.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
     }
 }
 
-void TSP::createShipping() {
+void TSP::createGraph(Graph& chosen_graph, const std::string& filePath, bool isSmall) {
     ifstream file;
-    file.open("../data/Toy-Graphs/shipping.csv");
+    file.open(filePath);
     string line;
 
     /* Check if file is open */
@@ -107,12 +111,14 @@ void TSP::createShipping() {
         return;
     }
 
-    /* Read the first line (labels) */
-    getline(file,line);
+    if(isSmall){
+        /* Read the first line (labels) */
+        getline(file,line);
 
-    if(line != "origem,destino,distancia"){
-        cout << "Error reading file, wrong format of file" << endl;
-        return;
+        if(line != "origem,destino,distancia"){
+            cout << "Error reading file, wrong format of file" << endl;
+            return;
+        }
     }
 
     /* Read the rest of the file */
@@ -130,51 +136,11 @@ void TSP::createShipping() {
 
             *label = labelData;
         }
-        toyGraphShipping.addVertex(stoi(origin), 0,0);
-        toyGraphShipping.addVertex(stoi(dest), 0,0);
-        toyGraphShipping.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
+        chosen_graph.addVertex(stoi(origin), 0,0);
+        chosen_graph.addVertex(stoi(dest), 0,0);
+        chosen_graph.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
     }
 
-}
-
-void TSP::createStadiums() {
-    ifstream file;
-    file.open("../data/Toy-Graphs/stadiums.csv");
-    string line;
-
-    /* Check if file is open */
-    if(!file.is_open()){
-        cout << "Error opening file" << endl;
-        return;
-    }
-
-    /* Read the first line (labels) */
-    getline(file,line);
-
-    if(line != "origem,destino,distancia"){
-        cout << "Error reading file, wrong format of file" << endl;
-        return;
-    }
-
-    /* Read the rest of the file */
-    while(getline(file, line)){
-        istringstream iss(line);
-
-        /* Labels */
-        string origin, dest, dist;
-        list<string* > labels = {&origin, &dest, &dist};
-
-        for(string* label : labels) {
-            std::string labelData;
-
-            std::getline(iss, labelData, ',');
-
-            *label = labelData;
-        }
-        toyGraphStadiums.addVertex(stoi(origin), 0,0);
-        toyGraphStadiums.addVertex(stoi(dest), 0,0);
-        toyGraphStadiums.addBidirectionalEdge(stoi(origin), stoi(dest), stod(dist));
-    }
 }
 
 void TSP::createTourism() {
@@ -223,13 +189,8 @@ void TSP::tspBTUtil(const Graph& graph, unsigned int n, unsigned int pos, std::u
     visited.insert(pos);
     curPath.push_back(pos);
 
-    bool canBack = false;
-    int temp_weight = 0;
-    /*if (visited.size() == n){
-        for (auto e: vertexSet[pos]->getAdj()){
-            if (e->getDest()->getId() == 0) canBack = true;
-        }
-    }*/
+    bool canBack = false; // boolean para ver se há caminho de regresso ao nó 0
+    double temp_weight = 0;
 
     if (visited.size() == n) {
         for (auto e: graph.findVertex(pos)->getAdj()){
@@ -265,9 +226,7 @@ double TSP::tspBT(const Graph& graph, unsigned int n, unsigned int* path) {
     std::vector<unsigned int> curPath;
     std::vector<unsigned int> bestPath;
 
-    //std::vector<Vertex *> vertexSet = graph.getVertexSet();
     tspBTUtil(graph, n, 0, visited, 0, minCost, curPath, bestPath);
-    //tspBTUtil2(vertexSet, n, 0, 0, minCost, curPath, bestPath);
 
     for (unsigned int i = 0; i < n; i++) {
         path[i] = bestPath[i];
@@ -323,12 +282,7 @@ double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double in
 
     //initialize path
     vector<int> currentPath = path;
-   /* for(unsigned int i = 0; i < chosen_graph.getNumVertex(); i++){
-        currentPath.push_back(i);
-    }
-    currentPath.push_back(0);
 
-    randomTour(chosen_graph, currentPath);*/
     vector<int> bestPath = currentPath;
 
     //initialize cost
@@ -386,74 +340,19 @@ double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double in
     return bestCost;
 }
 
-double TSP::calculatePathCost(Graph& graph, unsigned int* path){
-    double cost = 0.0;
-
-    for(unsigned int i = 0; i < graph.getVertexSet().size()-1; i++){
-        Vertex* v1 = graph.findVertex(path[i]);
-        Vertex* v2 = graph.findVertex(path[i+1]);
-
-        bool foundEdge = false;
-        for(Edge* e : v1->getAdj()){
-            if(e->getDest() == v2){
-                cost += e->getWeight();
-                foundEdge = true;
-                break;
-            }
-        }
-
-        if(!foundEdge){
-            cost += calculateDistance(v1->getCoords().lat, v1->getCoords().lon, v2->getCoords().lat, v2->getCoords().lon);
-        }
-    }
-
-    //distance from last to first vertex
-    Vertex* lastVertex = graph.findVertex(path[graph.getVertexSet().size()-1]);
-    Vertex* firstVertex = graph.findVertex(path[0]);
-
-    bool foundEdge = false;
-    for(Edge* e : lastVertex->getAdj()){
-        if(e->getDest() == firstVertex){
-            cost += e->getWeight();
-            foundEdge = true;
-            break;
-        }
-    }
-
-    if(!foundEdge){
-        cost += calculateDistance(lastVertex->getCoords().lat, lastVertex->getCoords().lon, firstVertex->getCoords().lat, firstVertex->getCoords().lon);
-    }
-
-    return cost;
-}
-
-void TSP::randomTour(Graph& graph, vector<int>& path){
-    // obtain a time-based seed:
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    auto rng = std::default_random_engine(seed);
-
-    //shuffle the path keeping the first and last index as 0
-    cout << "hello"  << endl;
-    path[0] = 0; //first
-    path[graph.getNumVertex()] = 0; //last
-    cout << "hello"  << endl;
-
-    //path[graph.getVertexSet().size()] = 0; //last
-    shuffle(path.begin()+1, path.end()-1, rng);
-    cout << "hello"  << endl;
-}
-
 
 double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
     unordered_set<int> not_visited;
     double cost = 0;
+
+    //reset graph
     for (auto v: chosen_graph.getVertexSet()){
         v->setVisited(false);
         not_visited.insert(v->getId());
     }
 
     int current_stop = 0;
-    int last_stop = 0;
+    //int last_stop = 0;
     path.push_back(0);
     chosen_graph.findVertex(0)->setVisited(true);
     not_visited.erase(0);
@@ -472,11 +371,10 @@ double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
 
         if (found){
             cost += min_distance;
-            //std::cout << min_distance << "  :  " << cost << endl;
             chosen_graph.findVertex(next_stop)->setVisited(true);
             path.push_back(next_stop);
             not_visited.erase(current_stop);
-            last_stop = current_stop;
+            //last_stop = current_stop;
             current_stop = next_stop;
         }
         else break;
@@ -533,12 +431,19 @@ std::vector<int> TSP:: swapVertex(std::vector<int> &path, int i, int j){
     return sol;
 }
 
-
-
 double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
     double cost = 0;
     for (int i = 0; i < path.size()-1; i++){
         cost += chosen_graph.getWeight(chosen_graph.findVertex(path[i]), chosen_graph.findVertex(path[i+1]));
     }
     return cost;
+}
+
+TSP::~TSP() {
+    cout << "TSP destructor called" << endl;
+    graph.clearGraph();
+    mediumGraph.clearGraph();
+    toyGraphTourism.clearGraph();
+    toyGraphShipping.clearGraph();
+    toyGraphStadiums.clearGraph();
 }

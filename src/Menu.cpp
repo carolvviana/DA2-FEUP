@@ -19,7 +19,14 @@ void Menu::getMenu() {
             case INIT_MENU: InitMenu(); break;
             case MAIN_MENU: mainMenu(); break;
             case BASIC_TSP_BACKTRACK: basicTSPBacktrack(); break;
+            case BACKTRACK_TSP_TOY: basicTSPBacktrackToy(); break;
+            case BACKTRACK_TSP_MEDIUM: basicTSPBacktrackMedium(); break;
+            case BACKTRACK_TSP_REAL_WORLD: basicTSPBacktrackRealWorld(); break;
+            case TRIANGLE_TSP_TOY: basicTSPTriangleToy(); break;
             case TSP_TRIANGLE_HEURISTIC: TSPtriangle(); break;
+            case TSP_OUR_HEURISTICS: ourHeuristics(); break;
+            case HEURISTICS_TSP_TOY: heuristicsTSPToy(); break;
+
         }
     } else {
 
@@ -27,7 +34,7 @@ void Menu::getMenu() {
     }
 }
 
-void Menu::InitMenu() {
+void Menu::mainMenu() {
 
     do {
         cout << "Initial Menu" << endl;
@@ -41,6 +48,7 @@ void Menu::InitMenu() {
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
+        system("cls");
         cin.clear();
         cin.ignore(1000, '\n');
 
@@ -48,22 +56,25 @@ void Menu::InitMenu() {
 
     switch (this->option) {
         case 1: {
-            tsp.createNodes("../data/Real-World-Graphs/graph1/nodes.csv");
-            tsp.createEdges("../data/Real-World-Graphs/graph1/edges.csv");
+            cout << "Creating Graph 1..." << endl;
+            tsp.createNodes(tsp.graph, "../data/Real-world Graphs/graph1/nodes.csv");
+            tsp.createEdges(tsp.graph, "../data/Real-world Graphs/graph1/edges.csv");
 
             menuState.push(MAIN_MENU);
             break;
         }
         case 2: {
-            tsp.createNodes("../data/Real-World-Graphs/graph2/nodes.csv");
-            tsp.createEdges("../data/Real-World-Graphs/graph1/edges.csv");
+            cout << "Creating Graph 2..." << endl;
+            tsp.createNodes(tsp.graph,"../data/Real-world Graphs/graph2/nodes.csv");
+            tsp.createEdges(tsp.graph,"../data/Real-world Graphs/graph1/edges.csv");
 
             menuState.push(MAIN_MENU);
             break;
         }
         case 3:{
-            tsp.createNodes("../data/Real-World-Graphs/graph3/nodes.csv");
-            tsp.createEdges("../data/Real-World-Graphs/graph1/edges.csv");
+            cout << "Creating Graph 3..." << endl;
+            tsp.createNodes(tsp.graph,"../data/Real-world Graphs/graph3/nodes.csv");
+            tsp.createEdges(tsp.graph,"../data/Real-world Graphs/graph1/edges.csv");
 
             menuState.push(MAIN_MENU);
             break;
@@ -73,12 +84,11 @@ void Menu::InitMenu() {
             break;
         }
     }
-
+    system("cls");
     getMenu();
 }
 
-
-void Menu::mainMenu() {
+void Menu::InitMenu() {
     do{
         cout << "Main Menu" << endl;
         cout << "1 - Basic TSP with Backtracking" << endl;
@@ -93,6 +103,7 @@ void Menu::mainMenu() {
             cout << "Invalid Option!" << endl;
         }
 
+        system("cls");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -108,7 +119,7 @@ void Menu::mainMenu() {
             break;
         }
         case 3:{
-            menuState.push(MAIN_MENU);
+            menuState.push(TSP_OUR_HEURISTICS);
             break;
         }
         case 4: {
@@ -122,9 +133,11 @@ void Menu::mainMenu() {
             break;
         }
     }
+    system("cls");
 
     getMenu();
 }
+
 void Menu::basicTSPBacktrack() {
 
     do {
@@ -141,234 +154,839 @@ void Menu::basicTSPBacktrack() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-
+        system("cls");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
     } while (this->option < 1 || this->option > 5);
 
-    switch (option) {
+    switch (this->option) {
         case 1: {
-            do {
-                cout << "1 - Shipping Graph" << endl;
-                cout << "2 - Stadium Graph" << endl;
-                cout << "3 - Tourism Graph" << endl;
-                cout << "Option:" << endl;
-                cin >> this->option;
-
-                if (this->option < 1 || this->option > 3) {
-                    cout << "Invalid Option!" << endl;
-                }
-
-                cin.clear(); // clear input buffer to restore cin to a usable state
-                cin.ignore(1000, '\n'); // ignore last input
-
-            } while (this->option < 1 || this->option > 3);
-
-            string number;
-            vector<string> res;
-
-            switch (this->option) {
-                case 1: {
-                    unsigned int path[this->tsp.toyGraphShipping.getNumVertex()];
-                    double minCost = tsp.tspBT(this->tsp.toyGraphShipping, this->tsp.toyGraphShipping.getNumVertex(),
-                                               path);
-
-                    cout << "The minimum cost to travel between all points is " << minCost << endl;
-
-                    cout << "You should take the following path: " << endl;
-
-                    for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
-                        cout << " " << path[i] << " ->";
-                    }
-                    cout << " " << path[0] << " (again eheheh ;)" << endl;
-
-                    break;
-                }
-                case 2: {
-
-                    unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
-                    double minCost = tsp.tspBT(this->tsp.toyGraphStadiums, this->tsp.toyGraphStadiums.getNumVertex(),
-                                               path);
-
-                    cout << "The minimum cost to travel between all points is " << minCost << endl;
-
-                    cout << "You should take the following path: " << endl;
-
-                    for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
-                        cout << " " << path[i] << " ->";
-                    }
-                    cout << " " << path[0] << " (again eheheh ;)" << endl;
-
-                    break;
-                }
-
-                case 3: {
-
-                    unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
-                    double minCost = tsp.tspBT(this->tsp.toyGraphTourism, this->tsp.toyGraphTourism.getNumVertex(),
-                                               path);
-
-                    cout << "The minimum cost to travel between all points is " << minCost << endl;
-
-                    cout << "You should take the following path: " << endl;
-
-                    for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
-                        cout << " " << path[i] << " ->";
-                    }
-                    cout << " " << path[0] << " (again eheheh ;)" << endl;
-
-
-                    break;
-                }
-            }
+            menuState.push(BACKTRACK_TSP_TOY);
             break;
-
+        }
+        case 2:{
+            menuState.push(BACKTRACK_TSP_MEDIUM);
+            break;
+        }
+        case 3:{
+            menuState.push(BACKTRACK_TSP_REAL_WORLD);
+            break;
+        }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
         }
 
+    }
+    system("cls");
+
+    getMenu();
+}
+void Menu::basicTSPBacktrackToy() {
+    do {
+        cout << "Which graph do you want to choose to run backtracking? " << endl;
+        cout << "1 - Shipping Graph" << endl;
+        cout << "2 - Stadium Graph" << endl;
+        cout << "3 - Tourism Graph" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 3) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 3);
+
+    string number;
+    vector<string> res;
+
+    switch (this->option) {
+        case 1: {
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.toyGraphShipping.getNumVertex()];
+            double minCost = tsp.tspBT(this->tsp.toyGraphShipping, this->tsp.toyGraphShipping.getNumVertex(),
+                                       path);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
+
+            cout << "You should take the following path: " << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
+            }
+            cout << " " << path[0] << " (again eheheh ;)" << endl << endl;
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
         case 2: {
-            do {
-                cout << "Which graph do you want to choose? Pick from 1-12" << endl;
-                cout << "Option:" << endl;
-                cin >> this->option;
 
-                if (this->option < 1 || this->option > 12) {
-                    cout << "Invalid Option!" << endl;
-                }
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
+            double minCost = tsp.tspBT(this->tsp.toyGraphStadiums, this->tsp.toyGraphStadiums.getNumVertex(),
+                                       path);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                cin.clear(); // clear input buffer to restore cin to a usable state
-                cin.ignore(1000, '\n'); // ignore last input
+            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
 
-            } while (this->option < 1 || this->option > 12);
+            cout << "You should take the following path: " << endl;
 
-            switch (this->option) {
-                case 1: {
-                    unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
-                    double cost = tsp.tspTriangleHeuristic(tsp.toyGraphStadiums, path);
-
-                    for (auto i: path){
-                        cout << i << " -> " <<'\n';
-                    }
-                    cout << cost << endl;
-                    break;
-                }
-                case 2: {
-
-                    std::vector<int> path;
-                    double cost = tsp.nearestNeighboor(tsp.toyGraphShipping, path);
-
-                    for (auto i: path){
-                        cout << i << " -> " <<'\n';
-                    }
-                    cout << cost << endl;
-                    cout << endl;
-
-                    double cost2 = tsp.twoOpt(tsp.toyGraphShipping, path, cost);
-
-                    for (auto i: path){
-                        cout << i << " -> " <<'\n';
-                    }
-                    cout << cost2 << endl;
-                    break;
-                }
-                case 3: {
-
-                    cout << "Creating graph..." << endl;
-                    std::vector<int> path;
-                    tsp.nearestNeighboor(tsp.toyGraphShipping, path);
-                    double cost = tsp.simulatedAnnealing(tsp.toyGraphShipping, path);
-
-                    cout << "Path: " << endl;
-                    for (auto i: path){
-                        cout << i << " -> " <<'\n';
-                    }
-
-                    cout << "Cost: "<< cost << endl;
-
-
-                    break;
-                }
-                case 4: {
-
-                    break;
-                }
-                case 5: {
-
-                    break;
-                }
-                case 6: {
-
-                    break;
-                }
-                case 7: {
-
-                    break;
-                }
-                case 8: {
-
-                    break;
-                }
-                case 9: {
-
-                    break;
-                }
-                case 10: {
-
-                    break;
-                }
-                case 11: {
-
-                    break;
-                }
-                case 12: {
-
-                    break;
-                }
-
-
-                    break;
+            for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
             }
-            case 4: {
-                string station1;
+            cout << " " << path[0] << " (again eheheh ;)" << endl << endl;
 
-                do {
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
-                } while (true);
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
 
-                break;
+            break;
+        }
+        case 3: {
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
+            double minCost = tsp.tspBT(this->tsp.toyGraphTourism, this->tsp.toyGraphTourism.getNumVertex(),
+                                       path);
 
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
+
+            cout << "You should take the following path: " << endl << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
             }
-            case 5: {
-                //back
-                menuState.pop();
-                break;
-            }
-            case 6: {
-                //exit
-                clearStack();
-                break;
-            }
+            cout << " " << path[0] << " (again eheheh ;)" << endl << endl;
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
+        }
+    }
+    system("cls");
+
+    getMenu();
+}
+void Menu::basicTSPBacktrackMedium() {
+    do {
+        cout << "Which graph do you want to choose? Pick from 1-12" << endl;
+        cout << "1 - Medium - 25 nodes" << endl;
+        cout << "2 - Medium - 50 nodes" << endl;
+        cout << "3 - Medium - 100 nodes" << endl;
+        cout << "4 - Medium - 100 nodes" << endl;
+        cout << "5 - Medium - 200 nodes" << endl;
+        cout << "6 - Medium - 300 nodes" << endl;
+        cout << "7 - Medium - 400 nodes" << endl;
+        cout << "8 - Medium - 500 nodes" << endl;
+        cout << "9 - Medium - 600 nodes" << endl;
+        cout << "10 - Medium - 700 nodes" << endl;
+        cout << "11 - Medium - 800 nodes" << endl;
+        cout << "12 - Medium - 900 nodes" << endl;
+        cout << "13 - Back" << endl;
+        cout << "14 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 12) {
+            cout << "Invalid Option!" << endl;
         }
 
-            getMenu();
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 12);
+
+    switch (this->option) {
+        case 1: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_25.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+            //double cost = tsp.tspTriangleHeuristic(tsp.mediumGraph, path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 2: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_50.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 3: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_75.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 4: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_100.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 5: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_200.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 6: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_300.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 7: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_400.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 8: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_500.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 9: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_600.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 10: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_700.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 11: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_800.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 12: {
+
+            tsp.mediumGraph.clearGraph();
+            tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_900.csv", false);
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.mediumGraph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.mediumGraph, tsp.mediumGraph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 13: {
+            menuState.pop();
+            break;
+        }
+        case 14: {
+            clearStack();
+            break;
+        }
     }
 
+    system("cls");
+
+    getMenu();
 }
+void Menu::basicTSPBacktrackRealWorld() {
+    do {
+        cout << "Which graph do you want to choose to run backtracking? " << endl;
+        cout << "1 - Real 1" << endl;
+        cout << "2 - Real 2" << endl;
+        cout << "3 - Real 3" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 5) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch(this->option){
+        case 1: {
+            tsp.graph.clearGraph();
+            cout << "Creating graph..." << endl;
+            tsp.createNodes(this->tsp.graph, "../data/Real-world Graphs/graph1/nodes.csv");
+            tsp.createEdges(this->tsp.graph, "../data/Real-world Graphs/graph1/edges.csv");
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.graph.getNumVertex()];
+            double cost = tsp.tspBT(tsp.graph, tsp.graph.getNumVertex(), path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << cost << endl << endl;
+
+            for (auto i: path){
+                cout << i << " -> ";
+            }
+            cout << path[0] << " (again eheheh ;)" << endl << endl;
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+            break;
+        }
+    }
+
+    system("cls");
+    getMenu();
+}
+
+
+
 
 void Menu::TSPtriangle() {
-    unsigned int path[this->tsp.graph.getNumVertex()];
-    double cost = tsp.tspTriangleHeuristic(tsp.graph, path);
+    do {
+        cout << "TSP approximation algorithm using traingle inequality" << endl;
+        cout << "Which graphs do you want to test?" << endl;
+        cout << "1 - Toy graphs" << endl;
+        cout << "2 - Medium graphs" << endl;
+        cout << "3 - Real World graphs" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
 
-    for (auto i: path){
-        cout << i << " -> " <<'\n';
+        if (this->option < 1 || this->option > 5) {
+            cout << "Invalid Option!" << endl;
+        }
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch (this->option) {
+        case 1: {
+            menuState.push(TRIANGLE_TSP_TOY);
+            break;
+        }
+        case 2:{
+            //menuState.push(TRIANGLE_TSP_MEDIUM);
+            break;
+        }
+        case 3:{
+            //menuState.push(TRIANGLE_TSP_REAL_WORLD);
+            break;
+        }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
+        }
+
     }
-    cout << cost << endl;
-    return;
+    system("cls");
+
+    getMenu();
+}
+
+void Menu::basicTSPTriangleToy() {
+    do {
+        cout << "Which graph do you want to choose to run backtracking? " << endl;
+        cout << "1 - Shipping Graph" << endl;
+        cout << "2 - Stadium Graph" << endl;
+        cout << "3 - Tourism Graph" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 3) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 3);
+
+    string number;
+    vector<string> res;
+
+    switch (this->option) {
+        case 1: {
+/*
+            cout << "Ups! Looks like Shipping is not an adequate graph for this approximation. Try again with another! " << endl <<endl;
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;*/
+        }
+        case 2: {
+
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
+            double minCost = tsp.tspTriangleHeuristic(tsp.toyGraphStadiums, path);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
+
+            cout << "You should take the following path: " << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
+            }
+            cout << " " << path[0] << " (again eheheh ;)" << endl << endl;
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 3: {
+            auto begin = std::chrono::high_resolution_clock::now();
+            unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
+            double minCost = tsp.tspBT(this->tsp.toyGraphTourism, this->tsp.toyGraphTourism.getNumVertex(),
+                                       path);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
+
+            cout << "You should take the following path: " << endl << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
+            }
+            cout << " " << path[0] << " (again eheheh ;)" << endl << endl;
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
+        }
+    }
+    system("cls");
+
+    getMenu();
 }
 
 
 
+void Menu::ourHeuristics(){
+    do{
+        cout << "Which graph do you want to choose to run our heuristics? " << endl;
+        cout << "Which graphs do you want to test?" << endl;
+        cout << "1 - Toy graphs" << endl;
+        cout << "2 - Medium graphs" << endl;
+        cout << "3 - Back" << endl;
+        cout << "4 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
 
+        if (this->option < 1 || this->option > 4) {
+            cout << "Invalid Option!" << endl;
+        }
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 4);
+
+    switch (this->option) {
+        case 1: {
+            menuState.push(HEURISTICS_TSP_TOY);
+            break;
+        }
+        case 2:{
+            //menuState.push(HEURISTICS_TSP_MEDIUM);
+            break;
+        }
+        case 3: {
+            menuState.pop();
+            break;
+        }
+        case 4: {
+            clearStack();
+            break;
+        }
+
+    }
+    system("cls");
+
+    getMenu();
+}
+
+void Menu::heuristicsTSPToy() {
+    do{
+        cout << "Which algorithm do you want to use?" << endl;
+        cout << "1 - Nearest Neighbour + 2-opt" << endl;
+        cout << "2 - Simulated Annealing" << endl;
+        cout << "3 - Christofides" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 5) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system("cls");
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch(this->option){
+        case 1:{
+            auto begin = std::chrono::high_resolution_clock::now();
+            vector<int> path;
+            double minCost = tsp.nearestNeighboor(this->tsp.toyGraphShipping, path);
+            minCost = tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+            cout << "You should take the following path: " << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
+            }
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+        case 2: {
+            auto begin = std::chrono::high_resolution_clock::now();
+            vector<int> path;
+            double minCost = tsp.nearestNeighboor(this->tsp.toyGraphShipping, path);
+            minCost = tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+            cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+            cout << "You should take the following path: " << endl;
+
+            for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
+                cout << " " << path[i] << " ->";
+            }
+
+            cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+            //wait for user input
+            cout << "Press any key to continue...";
+            cin.get();
+
+            break;
+        }
+    }
+
+    system("cls");
+    getMenu();
+}
 
 void Menu::clearStack() {
     while(!this->menuState.empty()){

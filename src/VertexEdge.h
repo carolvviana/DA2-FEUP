@@ -51,10 +51,11 @@ public:
 
     int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
 
-protected:
-    int id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
     std::set<Edge*> adjSet;
+    std::vector<Edge *> incoming; // incoming edges
+protected:
+    int id;                // identifier
 
     // auxiliary fields
     bool visited = false; // used by DFS, BFS, Prim ...
@@ -66,7 +67,6 @@ protected:
     Coordinates coords;
     std::string label;
 
-    std::vector<Edge *> incoming; // incoming edges
 
 
 };
