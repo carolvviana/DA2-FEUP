@@ -104,10 +104,10 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     return rad * c; //in km
 }
 
-void Graph::minCostMST() {
-    std::vector<Vertex*> res;
+std::set<Edge*> Graph::minCostMST() {
+    std::set<Edge*> res;
     if (vertexSet.empty()) {
-        return;
+        return {};
     }
     // Reset auxiliary info
     for(auto v : vertexSet) {
@@ -156,12 +156,27 @@ void Graph::minCostMST() {
                 }
             }
         }
+        /*if (v->getPath() != nullptr){
+            for (auto e: v->getPath()->getAdj()) {
+                if (e->getDest() == v) {
+                    res.insert(e);
+                }
+            }
+            v->getPath()->setIndegree(v->getPath()->getIndegree()+1);
+            v->setIndegree(v->getIndegree()+1);
+        }*/
+
     }
     for (auto v: vertexSet){
         auto w = v->getPath();
         if (w==nullptr) continue;
+        for (auto e: w->getAdj()){
+            if(e->getDest() == v) res.insert(e);
+        }
         w->addChild(v);
+        v->addChild(w);
     }
+    return res;
 }
 
 void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes) {
@@ -206,8 +221,10 @@ std::vector<Vertex*> Graph::findOddDegree() {
     return odd;
 }
 
-void Graph::perfectMatching() { //minCostPerfectMatching -> greedy version
-    double length;
+std::set<Edge*> Graph::perfectMatching(const std::vector<Vertex*>& vertices) { //minCostPerfectMatching -> greedy version
+    std::set<Edge*> matching;
+    std::vector<bool> matched(vertices.size(), false);
+    /*double length;
     std::vector<Vertex*>::iterator tmp;
     std::vector<Vertex*> odds;
     Vertex* closest_vertex;
@@ -232,7 +249,30 @@ void Graph::perfectMatching() { //minCostPerfectMatching -> greedy version
         //closest_vertex->setPerfectMatch(first_vertex);
         odds.erase(tmp);
         odds.erase(odds.cbegin());
+    }*/
+
+    for (Vertex* vertex : vertices) {
+        if (!matched[vertex->getId()]) {
+            double minDist = std::numeric_limits<double>::max();
+            Edge* minEdge = nullptr;
+
+            for (Edge* e : vertex->getAdj()) {
+                Vertex* dest = e->getDest();
+                if (!matched[dest->getId()] && e->getWeight() < minDist && std::find(vertices.begin(),vertices.end(),e->getDest())!=vertices.end()) {
+                    minDist = e->getWeight();
+                    minEdge = e;
+                }
+            }
+
+            if (minEdge != nullptr) {
+                matched[vertex->getId()] = true;
+                matched[minEdge->getDest()->getId()] = true;
+                matching.insert(minEdge);
+            }
+        }
     }
+
+    return matching;
 }
 
 //find an euler circuit
@@ -270,6 +310,38 @@ void Graph::eulerTour(int start, std:: vector<Vertex*> &path){
         }
     }
     path.push_back(vertexSet[pos]);
+}
+
+
+void Graph:: findEulerCircuit(std::set<Edge*> &combine_graph, int startVertex, std::vector<Vertex*> &euler_path) {
+    std::stack<int> circuit;
+    circuit.push(startVertex);
+    std::set<Edge*> visited;
+
+    while (!circuit.empty()) {
+        int currentVertex = circuit.top();
+
+        bool found = false;
+        for (auto it = combine_graph.begin(); it != combine_graph.end(); ++it) {
+            Edge* edge = *it;
+            if ((edge->getOrig()->getId() == currentVertex) && (visited.find(edge) == visited.end())) {
+                visited.insert(edge);
+                circuit.push(edge->getDest()->getId());
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            euler_path.push_back(findVertex(circuit.top()));
+            circuit.pop();
+        }
+    }
+    // Output the Euler circuit
+    /*while (!circuit.empty()) {
+        euler_path.push_back(findVertex(circuit.top()));
+        circuit.pop();
+    }*/
 }
 
 //Make euler tour Hamiltonian
