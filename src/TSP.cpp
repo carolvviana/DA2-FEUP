@@ -98,7 +98,7 @@ void TSP::createEdges(const string &filePath) {
 
 void TSP::createShipping() {
     ifstream file;
-    file.open("../data/Medium-Graphs/edges_25.csv");
+    file.open("../data/Toy-Graphs/shipping.csv");
     string line;
 
     /* Check if file is open */
@@ -108,12 +108,12 @@ void TSP::createShipping() {
     }
 
     /* Read the first line (labels) */
-    /*getline(file,line);
+    getline(file,line);
 
     if(line != "origem,destino,distancia"){
         cout << "Error reading file, wrong format of file" << endl;
         return;
-    }*/
+    }
 
     /* Read the rest of the file */
     while(getline(file, line)){
