@@ -1,3 +1,5 @@
+// By: Gonçalo Leão
+
 #ifndef DA_TP_CLASSES_VERTEX_EDGE
 #define DA_TP_CLASSES_VERTEX_EDGE
 
@@ -50,6 +52,7 @@ protected:
 
     // auxiliary fields
     bool visited = false; // used by DFS, BFS, Prim ...
+    unsigned int indegree; // used by topsort
     double dist = 0;
     Vertex *path = nullptr;
 
@@ -60,6 +63,9 @@ protected:
 
     Coordinates coords;
     std::string label;
+
+
+
 };
 
 /********************** Edge  ****************************/
@@ -71,6 +77,7 @@ public:
     Vertex * getDest() const;
     double getWeight() const;
     Vertex * getOrig() const;
+    bool getDeleted() const;
 
     void setReverse(Edge *reverse);
 
@@ -78,9 +85,15 @@ protected:
     Vertex * dest; // destination vertex
     double weight; // edge weight, can also be used for capacity
 
+    // auxiliary fields
+    bool selected = false;
+
     // used for bidirectional edges
     Vertex *orig;
+    Edge *reverse = nullptr;
     bool deleted = false;
+
+    double flow; // for flow-related problem
 };
 
 #endif /* DA_TP_CLASSES_VERTEX_EDGE */

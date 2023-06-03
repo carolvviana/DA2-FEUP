@@ -97,6 +97,3 @@ void Edge::setReverse(Edge *reverse) {
     this->reverse = reverse;
 }
 
-bool Edge::getDeleted() const{
-    return this->deleted;
-}
