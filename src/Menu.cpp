@@ -8,7 +8,6 @@
 using namespace std;
 
 Menu::Menu() {
-    //tsp = TSP();
     this->menuState.push(INIT_MENU);
     getMenu();
 }
@@ -307,6 +306,7 @@ void Menu::basicTSPBacktrackToy() {
 
     getMenu();
 }
+
 void Menu::basicTSPBacktrackMedium() {
     do {
         cout << "Which graph do you want to choose? Pick from 1-12" << endl;
@@ -856,7 +856,7 @@ void Menu::basicTSPTriangleToy() {
     switch (this->option) {
         case 1: {
 
-            cout << "Ups! Looks like Shipping is not an adequate graph for this approximation. Try again with another! " << endl <<endl;
+            cout << "Ups! Looks like Shipping is not an adequate graph for this approximation. Try again with another! " << endl;
             //wait for user input
             cout << "Press any key to continue...";
             cin.get();
@@ -871,7 +871,7 @@ void Menu::basicTSPTriangleToy() {
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-            cout << "The minimum cost to travel between all points is " << minCost << endl << endl;
+            cout << '\n' << "The minimum cost to travel between all points is " << minCost << endl;
 
             cout << "You should take the following path: " << endl;
 
@@ -1508,6 +1508,25 @@ void Menu::heuristicsTSPToy() {
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
+
                     //wait for user input
                     cout << "Press any key to continue...";
                     cin.get();
@@ -1620,6 +1639,25 @@ void Menu::heuristicsTSPToy() {
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.toyGraphStadiums, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
+
                     //wait for user input
                     cout << "Press any key to continue...";
                     cin.get();
@@ -1716,7 +1754,6 @@ void Menu::heuristicsTSPToy() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.toyGraphTourism, path);
                     minCost = tsp.twoOpt(this->tsp.toyGraphTourism, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
@@ -1731,6 +1768,25 @@ void Menu::heuristicsTSPToy() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.toyGraphTourism, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -1874,11 +1930,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1889,6 +1945,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -1993,11 +2068,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2008,6 +2083,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2114,7 +2208,6 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
@@ -2129,6 +2222,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2234,11 +2346,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2250,6 +2362,25 @@ void Menu::heuristicsTSPMedium() {
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
+
                     //wait for user input
                     cout << "Press any key to continue...";
                     cin.get();
@@ -2258,7 +2389,7 @@ void Menu::heuristicsTSPMedium() {
                 }
                 case 2: {
                     tsp.mediumGraph.clearGraph();
-                    tsp.createGraph(tsp.mediumGraph, "../data/Medium-Graphs/edges_10.csv", false);
+                    tsp.createGraph(tsp.mediumGraph, "../data/Medium-Graphs/edges_100.csv", false);
 
                     auto begin = std::chrono::high_resolution_clock::now();
 
@@ -2354,11 +2485,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2369,6 +2500,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2474,7 +2624,6 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
@@ -2489,6 +2638,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2594,11 +2762,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2609,6 +2777,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2714,11 +2901,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2729,6 +2916,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2834,7 +3040,6 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
@@ -2849,6 +3054,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -2954,11 +3178,11 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2969,6 +3193,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -3074,7 +3317,6 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
@@ -3089,6 +3331,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
@@ -3194,12 +3455,10 @@ void Menu::heuristicsTSPMedium() {
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
                     minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
-
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
                     cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
-
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
                     cout << "You should take the following path: " << endl;
@@ -3209,6 +3468,25 @@ void Menu::heuristicsTSPMedium() {
                     }
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
+
+
+                    auto begin2 = std::chrono::high_resolution_clock::now();
+                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+
+                    auto end2 = std::chrono::high_resolution_clock::now();
+                    auto elapsed2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2);
+
+                    cout << "----------------- 2-OPT MINIMUM PATH OPTIMIZATION -----------------" << minCost << endl;
+
+                    cout << "The minimum cost to travel between all points is " << minCost << endl;
+
+                    cout << "You should take the following path: " << endl;
+
+                    for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
+                        cout << " " << path[i] << " ->";
+                    }
+
+                    cout << "Execution time: " << elapsed2.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
                     cout << "Press any key to continue...";
