@@ -1,5 +1,3 @@
-// By: Gonçalo Leão
-
 #ifndef DA_TP_CLASSES_GRAPH
 #define DA_TP_CLASSES_GRAPH
 
@@ -9,7 +7,6 @@
 #include <algorithm>
 #include <unordered_set>
 #include <stack>
-//#include "../data_structures/MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
 
@@ -34,16 +31,47 @@ public:
 
     std::vector<Vertex *> getVertexSet() const;
 
+    /**
+     * @brief return the weight of the edge that connects two vertexes
+     * @param v - vertex 1
+     * @param w - vertex 2
+     * @return - weight of the edge that connects both vertexes
+     */
     double getWeight(Vertex* v, Vertex* w);
 
+    /**
+     * @brief deletes a certain graph
+     */
     void clearGraph();
 
+    /**
+     * @brief computes a minimum cost spanning tree using prim's algorithm
+     * Time complexity: O ( (V + E) log(V) )
+     * @return - set of edges that form the tree
+     */
     std::set<Edge*>  minCostMST();
 
+    /**
+     * @brief computes a preorder visit of a certain tree
+     * @param v starting node
+     * @param visitedNodes vector of node s that have been visited by the preorder
+     * Time complexity: O (V + E)
+     */
     void preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes);
 
+    /**
+     * @brief finds all nodes with odd degree
+     * @param v starting node
+     * @param visitedNodes vector of node s that have been visited by the preorder
+     * Time complexity: O (V)
+     */
     std::vector<Vertex*> findOddDegree();
 
+    /**
+     * @brief finds a minimum weight, perfect matching tree
+     * @param vertices vector of vertices where you want to get the MWPM
+     * Time complexity: O (V*E)
+     */
     std::set<Edge*> perfectMatching(const std::vector<Vertex*>& vertices);
 
 
@@ -52,11 +80,6 @@ protected:
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
-
-    /*
-     * Finds the index of the vertex with a given content.
-     */
-    int findVertexIdx(const int &id) const;
 };
 
 void deleteMatrix(int **m, int n);

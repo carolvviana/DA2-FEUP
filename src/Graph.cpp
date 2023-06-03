@@ -23,15 +23,6 @@ Vertex * Graph::findVertex(const int &id) const {
 }
 
 /*
- * Finds the index of the vertex with a given content.
- */
-int Graph::findVertexIdx(const int &id) const {
-    for (unsigned i = 0; i < vertexSet.size(); i++)
-        if (vertexSet[i]->getId() == id)
-            return i;
-    return -1;
-}
-/*
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
@@ -41,7 +32,6 @@ bool Graph::addVertex(const int &id, double lat, double lon) {
     vertexSet.push_back(new Vertex(id, lat, lon));
     return true;
 }
-
 
 bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     auto v1 = findVertex(sourc);
@@ -144,17 +134,8 @@ std::set<Edge*> Graph::minCostMST() {
                 }
             }
         }
-        /*if (v->getPath() != nullptr){
-            for (auto e: v->getPath()->getAdj()) {
-                if (e->getDest() == v) {
-                    res.insert(e);
-                }
-            }
-            v->getPath()->setIndegree(v->getPath()->getIndegree()+1);
-            v->setIndegree(v->getIndegree()+1);
-        }*/
-
     }
+
     for (auto v: vertexSet){
         auto w = v->getPath();
         if (w==nullptr) continue;
@@ -173,13 +154,6 @@ void Graph :: preOrderVisit(Vertex* v, std::vector<Vertex*> &visitedNodes) {
     }
 
     visitedNodes.push_back(v);
-
-/*
-    //visit in preorder
-    cost += v->getDist();
-    std::cout << v->getDist() << '\n';
-    std::cout << cost << '\n';
-    */
 
     for (auto w: vertexSet) {
         if (w->getPath() == v) {
@@ -231,32 +205,6 @@ std::vector<Vertex*> Graph::findOddDegree() {
 std::set<Edge*> Graph::perfectMatching(const std::vector<Vertex*>& vertices) { //minCostPerfectMatching -> greedy version
     std::set<Edge*> matching;
     std::vector<bool> matched(vertices.size(), false);
-    /*double length;
-    std::vector<Vertex*>::iterator tmp;
-    std::vector<Vertex*> odds;
-    Vertex* closest_vertex;
-
-    odds = findOddDegree();
-
-    // for each odd node
-    while (!odds.empty()) {
-        Vertex* first_vertex = odds[0];
-        length = std::numeric_limits<double>::max();
-        for (auto it = odds.begin()+1; it != odds.end(); ++it) {
-            if (getWeight(first_vertex, *it) < length) {
-                length = getWeight(first_vertex, *it);
-                closest_vertex = *it;
-                tmp = it;
-            }
-        }
-
-        first_vertex->addChild(closest_vertex);
-        closest_vertex->addChild(first_vertex);
-        //first_vertex->setPerfectMatch(closest_vertex);
-        //closest_vertex->setPerfectMatch(first_vertex);
-        odds.erase(tmp);
-        odds.erase(odds.cbegin());
-    }*/
 
     for (Vertex* vertex : vertices) {
         if (!matched[vertex->getId()]) {

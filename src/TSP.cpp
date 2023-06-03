@@ -273,7 +273,6 @@ double TSP::tspTriangleHeuristic(Graph& chosen_graph, unsigned int* path) {
     return minCost;
 }
 
-
 double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double initialTemperature,
                                 double coolingRate, int maxIterations){
 
@@ -336,7 +335,6 @@ double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double in
     path = bestPath;
     return bestCost;
 }
-
 
 double TSP :: nearestNeighboor(Graph& chosen_graph, std::vector<int> &path){
     unordered_set<int> not_visited;
@@ -440,7 +438,6 @@ double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
     return cost;
 }
 
-
 TSP::~TSP() {
     cout << "TSP destructor called" << endl;
     graph.clearGraph();
@@ -458,33 +455,6 @@ double TSP::getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path){
     cost += chosen_graph.getWeight(path[path.size()-1], path[0]);
     return cost;
 }
-
-/*double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
-    chosen_graph.minCostMST();
-
-    chosen_graph.perfectMatching();
-
-    // Loop through each index and find shortest path
-    /*double best = std::numeric_limits<double>::max();
-    int bestIndex;
-    for (long t = 0; t < chosen_graph.getNumVertex(); t++) {
-        double result = chosen_graph.findBestPath(t);
-
-       /* tsp.path_vals[t][0] = t; // set start
-        tsp.path_vals[t][1] = result; // set end*/
-
-   /*     if (result < best) {
-            bestIndex = t;
-            best = result;
-        }
-    }*/
-
-   /* chosen_graph.eulerTour(0,path);
-    double min_cost = getPathCost(chosen_graph, path);
-    //chosen_graph.makeHamiltonian(path, min_cost);
-
-    return min_cost;
-}*/
 
 double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
     std::set<Edge*> mst = chosen_graph.minCostMST();
@@ -507,18 +477,17 @@ double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
             //combine_graph.insert(new Edge(edge->getDest(), edge->getOrig(),edge->getWeight()));
         }
     }
-    Vertex* start = chosen_graph.getVertexSet()[0];
-    std::vector<Vertex*> euler_path;
-    //chosen_graph.findEulerCircuit(combine_graph, 0, euler_path);
 
-       bool once=false;
-       bool twice=false;
-       bool third=false;
+       std::vector<Vertex*> euler_path;
+       Vertex* start = chosen_graph.getVertexSet()[0];
+       std::stack<Vertex*> s;
+       s.push(start);
+
        while (!combine_graph.empty()) {
-           Vertex* current = start;
            Vertex* next = nullptr;
 
            do {
+               Vertex * current=s.top();
                euler_path.push_back(current);
                Edge* edge = nullptr;
 
@@ -533,24 +502,18 @@ double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
                    for (auto edge2: edge->getDest()->getAdj()){
                        if (edge2->getDest()==edge->getOrig()){
                            combine_graph.erase(edge2);
+                           break;
                        }
                    }
                    next = edge->getDest();
                    combine_graph.erase(edge);
-                   once=false;
-                   twice=false;
+                   s.push(next);
                } else {
                    next = nullptr;
-                   once=true;
-                   if (once) twice=true;
-                   else if (twice) third=true;
+                    s.pop();
                }
-
-               current = next;
-           } while (!third && next != start && current!= nullptr );
+           } while (next != start && !s.empty());
        }
-
-
 
     std::set<Vertex*> visited;
 

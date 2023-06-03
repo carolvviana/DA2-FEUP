@@ -2024,11 +2024,10 @@ void Menu::heuristicsTSPMedium() {
 
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
-                    minCost = tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS -----------------" << endl;
 
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;

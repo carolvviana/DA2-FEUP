@@ -1,7 +1,3 @@
-//
-// Created by Sergio on 05/03/2023.
-//
-
 #ifndef AED_PROJECT_2_MENU_H
 #define AED_PROJECT_2_MENU_H
 
@@ -87,6 +83,7 @@ private:
     void heuristicsTSPToy();
 
     void heuristicsTSPMedium();
+
 public:
     /**
      * Constructor of Menu class
