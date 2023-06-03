@@ -5,6 +5,12 @@
 #include "Menu.h"
 #include "TSP.h"
 
+#ifdef _WIN32
+    #define CLEAR_COMMAND "cls"
+#else
+    #define CLEAR_COMMAND "clear"
+#endif
+
 using namespace std;
 
 Menu::Menu() {
@@ -50,8 +56,7 @@ void Menu::mainMenu() {
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
-        system("clear");
+        system(CLEAR_COMMAND);
         cin.clear();
         cin.ignore(1000, '\n');
 
@@ -87,7 +92,7 @@ void Menu::mainMenu() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -106,7 +111,7 @@ void Menu::InitMenu() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -136,7 +141,7 @@ void Menu::InitMenu() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -157,7 +162,7 @@ void Menu::basicTSPBacktrack() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -186,7 +191,7 @@ void Menu::basicTSPBacktrack() {
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -205,7 +210,7 @@ void Menu::basicTSPBacktrackToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -302,7 +307,7 @@ void Menu::basicTSPBacktrackToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -331,7 +336,7 @@ void Menu::basicTSPBacktrackMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -661,7 +666,7 @@ void Menu::basicTSPBacktrackMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -681,7 +686,7 @@ void Menu::basicTSPBacktrackRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -776,7 +781,7 @@ void Menu::basicTSPBacktrackRealWorld() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -795,7 +800,7 @@ void Menu::TSPtriangle() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -824,7 +829,7 @@ void Menu::TSPtriangle() {
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -844,7 +849,7 @@ void Menu::basicTSPTriangleToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -922,7 +927,7 @@ void Menu::basicTSPTriangleToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -951,7 +956,7 @@ void Menu::basicTSPTriangleMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1280,7 +1285,7 @@ void Menu::basicTSPTriangleMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -1300,7 +1305,7 @@ void Menu::basicTSPTriangleRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1395,7 +1400,7 @@ void Menu::basicTSPTriangleRealWorld() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -1414,7 +1419,7 @@ void Menu::ourHeuristics(){
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1439,7 +1444,7 @@ void Menu::ourHeuristics(){
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -1459,7 +1464,7 @@ void Menu::heuristicsTSPToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1480,7 +1485,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1611,7 +1616,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1742,7 +1747,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1866,7 +1871,7 @@ void Menu::heuristicsTSPToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -1894,7 +1899,7 @@ void Menu::heuristicsTSPMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1915,7 +1920,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2053,7 +2058,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2193,7 +2198,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2331,7 +2336,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2470,7 +2475,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2609,7 +2614,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2747,7 +2752,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2886,7 +2891,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3025,7 +3030,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3163,7 +3168,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3302,7 +3307,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3440,7 +3445,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3573,7 +3578,7 @@ void Menu::heuristicsTSPMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
