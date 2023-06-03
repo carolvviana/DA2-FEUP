@@ -59,7 +59,6 @@ void Menu::mainMenu() {
             cout << "Invalid Option!" << endl;
         }
         system(CLEAR_COMMAND);
-
         cin.clear();
         cin.ignore(1000, '\n');
 

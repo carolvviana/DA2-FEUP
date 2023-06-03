@@ -26,7 +26,7 @@ void TSP::createNodes(Graph& chosen_graph, const std::string &filePath) {
 
     /* Check if file is open */
     if(!file.is_open()){
-        cout << "Error opening file, wrong file path" << endl;
+        cout << "Error opening file, please check the file path!" << endl;
         return;
     }
 
@@ -65,7 +65,7 @@ void TSP::createEdges(Graph& chosen_graph, const string &filePath) {
 
     /* Check if file is open */
     if(!file.is_open()){
-        cout << "Error opening file" << endl;
+        cout << "Error opening file, please check the file path!" << endl;
         return;
     }
 
