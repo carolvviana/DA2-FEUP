@@ -5,6 +5,12 @@
 #include "Menu.h"
 #include "TSP.h"
 
+#ifdef _WIN32
+    #define CLEAR_COMMAND "cls"
+#else
+    #define CLEAR_COMMAND "clear"
+#endif
+
 using namespace std;
 
 Menu::Menu() {
@@ -21,6 +27,8 @@ void Menu::getMenu() {
             case BACKTRACK_TSP_TOY: basicTSPBacktrackToy(); break;
             case BACKTRACK_TSP_MEDIUM: basicTSPBacktrackMedium(); break;
             case BACKTRACK_TSP_REAL_WORLD: basicTSPBacktrackRealWorld(); break;
+            case WARNING_TSP_MEDIUM: basicTSPWarningMedium();break;
+            case WARNING_TSP_REAL_WORLD: basicTSPWarningRealWorld(); break;
             case TRIANGLE_TSP_TOY: basicTSPTriangleToy(); break;
             case TRIANGLE_TSP_MEDIUM: basicTSPTriangleMedium(); break;
             case TRIANGLE_TSP_REAL_WORLD: basicTSPTriangleRealWorld(); break;
@@ -50,8 +58,8 @@ void Menu::mainMenu() {
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
-        system("clear");
+        system(CLEAR_COMMAND);
+
         cin.clear();
         cin.ignore(1000, '\n');
 
@@ -87,7 +95,7 @@ void Menu::mainMenu() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -106,7 +114,7 @@ void Menu::InitMenu() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -136,7 +144,7 @@ void Menu::InitMenu() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -157,7 +165,7 @@ void Menu::basicTSPBacktrack() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -169,11 +177,11 @@ void Menu::basicTSPBacktrack() {
             break;
         }
         case 2:{
-            menuState.push(BACKTRACK_TSP_MEDIUM);
+            menuState.push(WARNING_TSP_MEDIUM);
             break;
         }
         case 3:{
-            menuState.push(BACKTRACK_TSP_REAL_WORLD);
+            menuState.push(WARNING_TSP_REAL_WORLD);
             break;
         }
         case 4: {
@@ -186,7 +194,7 @@ void Menu::basicTSPBacktrack() {
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -205,7 +213,7 @@ void Menu::basicTSPBacktrackToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -216,7 +224,7 @@ void Menu::basicTSPBacktrackToy() {
 
     switch (this->option) {
         case 1: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             auto begin = std::chrono::high_resolution_clock::now();
             unsigned int path[this->tsp.toyGraphShipping.getNumVertex()];
             double minCost = tsp.tspBT(this->tsp.toyGraphShipping, this->tsp.toyGraphShipping.getNumVertex(),
@@ -242,7 +250,7 @@ void Menu::basicTSPBacktrackToy() {
             break;
         }
         case 2: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             auto begin = std::chrono::high_resolution_clock::now();
             unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
             double minCost = tsp.tspBT(this->tsp.toyGraphStadiums, this->tsp.toyGraphStadiums.getNumVertex(),
@@ -268,6 +276,7 @@ void Menu::basicTSPBacktrackToy() {
             break;
         }
         case 3: {
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             auto begin = std::chrono::high_resolution_clock::now();
             unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
             double minCost = tsp.tspBT(this->tsp.toyGraphTourism, this->tsp.toyGraphTourism.getNumVertex(),
@@ -302,8 +311,86 @@ void Menu::basicTSPBacktrackToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
+    getMenu();
+}
+
+void Menu::basicTSPWarningMedium() {
+    do {
+        cout << "WARNING!!!! " << endl;
+        cout << "This algorithm takes a long time to run. Are you sure you want to do it?" << endl;
+        cout << "1 - Let's do it" << endl;
+        cout << "2 - Back" << endl;
+        cout << "3 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 3) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system(CLEAR_COMMAND);
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch(this->option){
+        case 1: {
+            menuState.push(BACKTRACK_TSP_MEDIUM);
+            break;
+        }
+        case 2: {
+            menuState.pop();
+            break;
+        }
+        case 3: {
+            clearStack();
+            break;
+        }
+    }
+
+    system(CLEAR_COMMAND);
+    getMenu();
+}
+
+void Menu::basicTSPWarningRealWorld() {
+    do {
+        cout << "WARNING!!!! " << endl;
+        cout << "This algorithm takes a long time to run. Are you sure you want to do it?" << endl;
+        cout << "1 - Let's do it" << endl;
+        cout << "2 - Back" << endl;
+        cout << "3 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 3) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        system(CLEAR_COMMAND);
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 5);
+
+    switch(this->option){
+        case 1: {
+            menuState.push(BACKTRACK_TSP_REAL_WORLD);
+            break;
+        }
+        case 2: {
+            menuState.pop();
+            break;
+        }
+        case 3: {
+            clearStack();
+            break;
+        }
+    }
+
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -331,7 +418,7 @@ void Menu::basicTSPBacktrackMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -339,7 +426,7 @@ void Menu::basicTSPBacktrackMedium() {
 
     switch (this->option) {
         case 1: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_25.csv", false);
 
@@ -366,7 +453,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 2: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_50.csv", false);
 
@@ -392,7 +479,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 3: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_75.csv", false);
 
@@ -418,7 +505,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 4: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_100.csv", false);
 
@@ -444,7 +531,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 5: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_200.csv", false);
 
@@ -470,7 +557,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 6: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_300.csv", false);
 
@@ -496,7 +583,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 7: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_400.csv", false);
 
@@ -522,7 +609,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 8: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_500.csv", false);
 
@@ -548,7 +635,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 9: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_600.csv", false);
 
@@ -574,7 +661,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 10: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_700.csv", false);
 
@@ -600,7 +687,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 11: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_800.csv", false);
 
@@ -626,7 +713,7 @@ void Menu::basicTSPBacktrackMedium() {
             break;
         }
         case 12: {
-
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_900.csv", false);
 
@@ -661,7 +748,7 @@ void Menu::basicTSPBacktrackMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -681,7 +768,7 @@ void Menu::basicTSPBacktrackRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -689,6 +776,7 @@ void Menu::basicTSPBacktrackRealWorld() {
 
     switch(this->option){
         case 1: {
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.graph.clearGraph();
             cout << "Creating graph..." << endl;
             tsp.createNodes(this->tsp.graph, "../data/Real-world Graphs/graph1/nodes.csv");
@@ -715,6 +803,7 @@ void Menu::basicTSPBacktrackRealWorld() {
             break;
         }
         case 2: {
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.graph.clearGraph();
             cout << "Creating graph..." << endl;
             tsp.createNodes(this->tsp.graph, "../data/Real-world Graphs/graph2/nodes.csv");
@@ -741,6 +830,7 @@ void Menu::basicTSPBacktrackRealWorld() {
             break;
         }
         case 3: {
+            cout << '\n' << "----------------- BACKTRACK -----------------" << endl;
             tsp.graph.clearGraph();
             cout << "Creating graph..." << endl;
             tsp.createNodes(this->tsp.graph, "../data/Real-world Graphs/graph3/nodes.csv");
@@ -776,7 +866,7 @@ void Menu::basicTSPBacktrackRealWorld() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -795,7 +885,7 @@ void Menu::TSPtriangle() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -824,7 +914,7 @@ void Menu::TSPtriangle() {
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -844,7 +934,7 @@ void Menu::basicTSPTriangleToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -864,7 +954,7 @@ void Menu::basicTSPTriangleToy() {
             break;
         }
         case 2: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             auto begin = std::chrono::high_resolution_clock::now();
             unsigned int path[this->tsp.toyGraphStadiums.getNumVertex()];
             double minCost = tsp.tspTriangleHeuristic(tsp.toyGraphStadiums, path);
@@ -889,6 +979,7 @@ void Menu::basicTSPTriangleToy() {
             break;
         }
         case 3: {
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             auto begin = std::chrono::high_resolution_clock::now();
             unsigned int path[this->tsp.toyGraphTourism.getNumVertex()];
             double minCost = tsp.tspTriangleHeuristic(tsp.toyGraphTourism, path);
@@ -922,7 +1013,7 @@ void Menu::basicTSPTriangleToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -951,7 +1042,7 @@ void Menu::basicTSPTriangleMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -959,7 +1050,7 @@ void Menu::basicTSPTriangleMedium() {
 
     switch (this->option) {
         case 1: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_25.csv", false);
 
@@ -985,7 +1076,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 2: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_50.csv", false);
 
@@ -1011,7 +1102,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 3: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_75.csv", false);
 
@@ -1037,7 +1128,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 4: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_100.csv", false);
 
@@ -1063,7 +1154,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 5: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_200.csv", false);
 
@@ -1089,7 +1180,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 6: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_300.csv", false);
 
@@ -1115,7 +1206,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 7: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_400.csv", false);
 
@@ -1141,7 +1232,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 8: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_500.csv", false);
 
@@ -1167,7 +1258,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 9: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_600.csv", false);
 
@@ -1193,7 +1284,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 10: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_700.csv", false);
 
@@ -1219,7 +1310,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 11: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_800.csv", false);
 
@@ -1245,7 +1336,7 @@ void Menu::basicTSPTriangleMedium() {
             break;
         }
         case 12: {
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             tsp.mediumGraph.clearGraph();
             tsp.createGraph(this->tsp.mediumGraph, "../data/Medium-Graphs/edges_900.csv", false);
 
@@ -1280,7 +1371,7 @@ void Menu::basicTSPTriangleMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -1300,7 +1391,7 @@ void Menu::basicTSPTriangleRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1320,6 +1411,7 @@ void Menu::basicTSPTriangleRealWorld() {
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             cout << "The minimum cost to travel between all points is " << cost << endl << endl;
 
             for (auto i: path){
@@ -1345,7 +1437,7 @@ void Menu::basicTSPTriangleRealWorld() {
 
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             cout << "The minimum cost to travel between all points is " << cost << endl << endl;
 
             for (auto i: path){
@@ -1371,7 +1463,7 @@ void Menu::basicTSPTriangleRealWorld() {
 
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-
+            cout << '\n' << "----------------- TRIANGULAR APPROXIMATION HEURISTIC -----------------" << endl;
             cout << "The minimum cost to travel between all points is " << cost << endl << endl;
 
             for (auto i: path){
@@ -1395,7 +1487,7 @@ void Menu::basicTSPTriangleRealWorld() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -1414,7 +1506,7 @@ void Menu::ourHeuristics(){
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1439,7 +1531,7 @@ void Menu::ourHeuristics(){
         }
 
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }
@@ -1459,7 +1551,7 @@ void Menu::heuristicsTSPToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1480,7 +1572,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1592,10 +1684,11 @@ void Menu::heuristicsTSPToy() {
                     break;
                 }
                 case 4: default: {
-                    //menuState.pop();
                     break;
                 }
             }
+
+            break;
         }
         case 2:{
             do{
@@ -1611,7 +1704,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1714,6 +1807,7 @@ void Menu::heuristicsTSPToy() {
                     for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
                         cout << " " << path[i]->getId() << " ->";
                     }
+                    cout << path[0]->getId() << endl;
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
@@ -1727,6 +1821,7 @@ void Menu::heuristicsTSPToy() {
                     break;
                 }
             }
+            break;
         }
         case 3:{
             do{
@@ -1742,7 +1837,7 @@ void Menu::heuristicsTSPToy() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -1856,6 +1951,7 @@ void Menu::heuristicsTSPToy() {
                     break;
                 }
             }
+            break;
         }
         case 4:{
             menuState.pop();
@@ -1866,7 +1962,7 @@ void Menu::heuristicsTSPToy() {
             break;
         }
     }
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
     getMenu();
 }
 
@@ -1894,7 +1990,7 @@ void Menu::heuristicsTSPMedium() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");system("clear");
+        system(CLEAR_COMMAND);
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1915,7 +2011,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2038,6 +2134,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
+            break;
         }
         case 2: {
             do{
@@ -2053,7 +2150,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2177,7 +2274,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 3: {
             do{
@@ -2193,7 +2290,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2315,7 +2412,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 4: {
             do{
@@ -2331,7 +2428,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2454,7 +2551,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 5: {
             do{
@@ -2470,7 +2567,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2593,7 +2690,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 6: {
             do{
@@ -2609,7 +2706,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2731,7 +2828,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 7: {
             do{
@@ -2747,7 +2844,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -2870,7 +2967,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 8: {
             do{
@@ -2886,7 +2983,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3009,7 +3106,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 9: {
             do{
@@ -3025,7 +3122,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3147,7 +3244,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 10: {
             do{
@@ -3163,7 +3260,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3286,7 +3383,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 11: {
             do{
@@ -3302,7 +3399,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3424,7 +3521,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 12: {
             do{
@@ -3440,7 +3537,7 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");system("clear");
+                system(CLEAR_COMMAND);
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 4);
@@ -3561,7 +3658,7 @@ void Menu::heuristicsTSPMedium() {
                     break;
                 }
             }
-
+            break;
         }
         case 13: {
             menuState.pop();
@@ -3573,7 +3670,7 @@ void Menu::heuristicsTSPMedium() {
         }
     }
 
-    system("cls");system("clear");
+    system(CLEAR_COMMAND);
 
     getMenu();
 }

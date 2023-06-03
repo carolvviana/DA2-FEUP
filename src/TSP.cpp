@@ -455,6 +455,7 @@ double TSP::getPathCost(Graph& chosen_graph, std::vector<Vertex*> &path){
     for (int i = 0; i < path.size()-1; i++){
         cost += chosen_graph.getWeight(path[i], path[i+1]);
     }
+    cost += chosen_graph.getWeight(path[path.size()-1], path[0]);
     return cost;
 }
 
@@ -495,6 +496,7 @@ double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
         if (combine_graph.find(e)==combine_graph.end()){ // se ainda nao estiver lá
             combine_graph.insert(e);
             combine_graph.insert(e->getDest()->addEdge(e->getOrig(),e->getWeight()));
+            //combine_graph.insert(new Edge(e->getDest(), e->getOrig(),e->getWeight()));
         }
     }
     bool reverse=false;
@@ -502,6 +504,7 @@ double TSP :: christofides(Graph& chosen_graph, std::vector<Vertex*> &path){
         if (combine_graph.find(edge)==combine_graph.end()){
             combine_graph.insert(edge);
             combine_graph.insert(edge->getDest()->addEdge(edge->getOrig(),edge->getWeight()));
+            //combine_graph.insert(new Edge(edge->getDest(), edge->getOrig(),edge->getWeight()));
         }
     }
     Vertex* start = chosen_graph.getVertexSet()[0];

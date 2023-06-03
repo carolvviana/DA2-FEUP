@@ -21,10 +21,12 @@ enum MenuState{
     TSP_OUR_HEURISTICS,
     BACKTRACK_TSP_TOY,
     BACKTRACK_TSP_MEDIUM,
+    BACKTRACK_TSP_REAL_WORLD,
+    WARNING_TSP_MEDIUM,
+    WARNING_TSP_REAL_WORLD,
     TRIANGLE_TSP_TOY,
     TRIANGLE_TSP_MEDIUM,
     TRIANGLE_TSP_REAL_WORLD,
-    BACKTRACK_TSP_REAL_WORLD,
     HEURISTICS_TSP_TOY,
     HEURISTICS_TSP_MEDIUM
 };
@@ -67,6 +69,10 @@ private:
     void ourHeuristics();
 
     void basicTSPBacktrackToy();
+
+    void basicTSPWarningRealWorld();
+
+    void basicTSPWarningMedium();
 
     void basicTSPBacktrackMedium();
 
