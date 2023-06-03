@@ -8,8 +8,8 @@
 using namespace std;
 
 Menu::Menu() {
+    //tsp = TSP();
     this->menuState.push(INIT_MENU);
-    tsp = TSP();
     getMenu();
 }
 
@@ -51,7 +51,8 @@ void Menu::mainMenu() {
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");
+        system("cls");system("clear");
+        system("clear");
         cin.clear();
         cin.ignore(1000, '\n');
 
@@ -87,7 +88,7 @@ void Menu::mainMenu() {
             break;
         }
     }
-    system("cls");
+    system("cls");system("clear");
     getMenu();
 }
 
@@ -106,7 +107,7 @@ void Menu::InitMenu() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -136,7 +137,7 @@ void Menu::InitMenu() {
             break;
         }
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -157,7 +158,7 @@ void Menu::basicTSPBacktrack() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -186,7 +187,7 @@ void Menu::basicTSPBacktrack() {
         }
 
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -201,15 +202,15 @@ void Menu::basicTSPBacktrackToy() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 3) {
+        if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 3);
+    } while (this->option < 1 || this->option > 5);
 
     string number;
     vector<string> res;
@@ -302,7 +303,7 @@ void Menu::basicTSPBacktrackToy() {
             break;
         }
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -311,7 +312,7 @@ void Menu::basicTSPBacktrackMedium() {
         cout << "Which graph do you want to choose? Pick from 1-12" << endl;
         cout << "1 - Medium - 25 nodes" << endl;
         cout << "2 - Medium - 50 nodes" << endl;
-        cout << "3 - Medium - 100 nodes" << endl;
+        cout << "3 - Medium - 75 nodes" << endl;
         cout << "4 - Medium - 100 nodes" << endl;
         cout << "5 - Medium - 200 nodes" << endl;
         cout << "6 - Medium - 300 nodes" << endl;
@@ -326,15 +327,15 @@ void Menu::basicTSPBacktrackMedium() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 12) {
+        if (this->option < 1 || this->option > 14) {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 12);
+    } while (this->option < 1 || this->option > 14);
 
     switch (this->option) {
         case 1: {
@@ -660,7 +661,7 @@ void Menu::basicTSPBacktrackMedium() {
         }
     }
 
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -680,7 +681,7 @@ void Menu::basicTSPBacktrackRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -765,9 +766,17 @@ void Menu::basicTSPBacktrackRealWorld() {
             cin.get();
             break;
         }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
+        }
     }
 
-    system("cls");
+    system("cls");system("clear");
     getMenu();
 }
 
@@ -786,7 +795,7 @@ void Menu::TSPtriangle() {
         if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -802,7 +811,7 @@ void Menu::TSPtriangle() {
             break;
         }
         case 3:{
-            //menuState.push(TRIANGLE_TSP_REAL_WORLD);
+            menuState.push(TRIANGLE_TSP_REAL_WORLD);
             break;
         }
         case 4: {
@@ -815,7 +824,7 @@ void Menu::TSPtriangle() {
         }
 
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -831,15 +840,15 @@ void Menu::basicTSPTriangleToy() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 3) {
+        if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 3);
+    } while (this->option < 1 || this->option > 5);
 
     string number;
     vector<string> res;
@@ -913,7 +922,7 @@ void Menu::basicTSPTriangleToy() {
             break;
         }
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -923,7 +932,7 @@ void Menu::basicTSPTriangleMedium() {
         cout << "Which graph do you want to choose? Pick from 1-12" << endl;
         cout << "1 - Medium - 25 nodes" << endl;
         cout << "2 - Medium - 50 nodes" << endl;
-        cout << "3 - Medium - 100 nodes" << endl;
+        cout << "3 - Medium - 75 nodes" << endl;
         cout << "4 - Medium - 100 nodes" << endl;
         cout << "5 - Medium - 200 nodes" << endl;
         cout << "6 - Medium - 300 nodes" << endl;
@@ -938,15 +947,15 @@ void Menu::basicTSPTriangleMedium() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 12) {
+        if (this->option < 1 || this->option > 14) {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 12);
+    } while (this->option < 1 || this->option > 14);
 
     switch (this->option) {
         case 1: {
@@ -1271,7 +1280,7 @@ void Menu::basicTSPTriangleMedium() {
         }
     }
 
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -1291,7 +1300,7 @@ void Menu::basicTSPTriangleRealWorld() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1376,9 +1385,17 @@ void Menu::basicTSPTriangleRealWorld() {
             cin.get();
             break;
         }
+        case 4: {
+            menuState.pop();
+            break;
+        }
+        case 5: {
+            clearStack();
+            break;
+        }
     }
 
-    system("cls");
+    system("cls");system("clear");
     getMenu();
 }
 
@@ -1397,7 +1414,7 @@ void Menu::ourHeuristics(){
         if (this->option < 1 || this->option > 4) {
             cout << "Invalid Option!" << endl;
         }
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1422,7 +1439,7 @@ void Menu::ourHeuristics(){
         }
 
     }
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }
@@ -1442,7 +1459,7 @@ void Menu::heuristicsTSPToy() {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
@@ -1455,17 +1472,18 @@ void Menu::heuristicsTSPToy() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -1473,12 +1491,12 @@ void Menu::heuristicsTSPToy() {
 
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(this->tsp.toyGraphShipping, path);
-                    //minCost = tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
+                    minCost = tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1501,12 +1519,15 @@ void Menu::heuristicsTSPToy() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.toyGraphShipping, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.toyGraphShipping, path);
+                    tsp.twoOpt(this->tsp.toyGraphShipping, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.toyGraphShipping, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1515,7 +1536,7 @@ void Menu::heuristicsTSPToy() {
                     for (int i = 0; i < this->tsp.toyGraphShipping.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -1533,7 +1554,7 @@ void Menu::heuristicsTSPToy() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1551,6 +1572,10 @@ void Menu::heuristicsTSPToy() {
 
                     break;
                 }
+                case 4: default: {
+                    //menuState.pop();
+                    break;
+                }
             }
         }
         case 2:{
@@ -1559,17 +1584,18 @@ void Menu::heuristicsTSPToy() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -1577,12 +1603,12 @@ void Menu::heuristicsTSPToy() {
 
                     vector<int> path;
                     double minCost = tsp.nearestNeighboor(tsp.toyGraphStadiums, path);
-                    //minCost = tsp.twoOpt(this->tsp.toyGraphStadiums, path, minCost);
+                    minCost = tsp.twoOpt(this->tsp.toyGraphStadiums, path, minCost);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1604,13 +1630,17 @@ void Menu::heuristicsTSPToy() {
 
                     auto begin = std::chrono::high_resolution_clock::now();
 
+
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.toyGraphStadiums, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.toyGraphStadiums, path);
+                    tsp.twoOpt(this->tsp.toyGraphStadiums, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.toyGraphStadiums, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1619,7 +1649,7 @@ void Menu::heuristicsTSPToy() {
                     for (int i = 0; i < this->tsp.toyGraphStadiums.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -1637,7 +1667,7 @@ void Menu::heuristicsTSPToy() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1655,6 +1685,9 @@ void Menu::heuristicsTSPToy() {
 
                     break;
                 }
+                case 4: default: {
+                    break;
+                }
             }
         }
         case 3:{
@@ -1663,17 +1696,18 @@ void Menu::heuristicsTSPToy() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -1686,7 +1720,7 @@ void Menu::heuristicsTSPToy() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1709,12 +1743,15 @@ void Menu::heuristicsTSPToy() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.toyGraphTourism, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.toyGraphTourism, path);
+                    tsp.twoOpt(this->tsp.toyGraphTourism, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.toyGraphTourism, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1723,7 +1760,7 @@ void Menu::heuristicsTSPToy() {
                     for (int i = 0; i < this->tsp.toyGraphTourism.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -1741,7 +1778,7 @@ void Menu::heuristicsTSPToy() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1759,6 +1796,9 @@ void Menu::heuristicsTSPToy() {
 
                     break;
                 }
+                case 4: default: {
+                    break;
+                }
             }
         }
         case 4:{
@@ -1770,7 +1810,7 @@ void Menu::heuristicsTSPToy() {
             break;
         }
     }
-    system("cls");
+    system("cls");system("clear");
     getMenu();
 }
 
@@ -1779,7 +1819,7 @@ void Menu::heuristicsTSPMedium() {
         cout << "Which graph do you want to choose? Pick from 1-12" << endl;
         cout << "1 - Medium - 25 nodes" << endl;
         cout << "2 - Medium - 50 nodes" << endl;
-        cout << "3 - Medium - 100 nodes" << endl;
+        cout << "3 - Medium - 75 nodes" << endl;
         cout << "4 - Medium - 100 nodes" << endl;
         cout << "5 - Medium - 200 nodes" << endl;
         cout << "6 - Medium - 300 nodes" << endl;
@@ -1794,15 +1834,15 @@ void Menu::heuristicsTSPMedium() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 12) {
+        if (this->option < 1 || this->option > 14) {
             cout << "Invalid Option!" << endl;
         }
 
-        system("cls");
+        system("cls");system("clear");
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 12);
+    } while (this->option < 1 || this->option > 14);
 
     switch (this->option) {
         case 1: {
@@ -1811,17 +1851,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -1837,7 +1878,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1862,12 +1903,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1876,7 +1920,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -1897,7 +1941,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1913,6 +1957,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -1923,17 +1970,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -1949,7 +1997,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1974,12 +2022,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -1988,6 +2039,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
+                    cout << " " << path[0] << endl;
 
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
@@ -2009,7 +2061,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2025,6 +2077,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2036,17 +2091,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2062,7 +2118,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2087,12 +2143,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2101,7 +2160,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2122,7 +2181,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2140,6 +2199,9 @@ void Menu::heuristicsTSPMedium() {
 
                     break;
                 }
+                case 4: default: {
+                    break;
+                }
             }
 
         }
@@ -2149,17 +2211,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2175,7 +2238,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2200,12 +2263,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2214,7 +2280,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2235,7 +2301,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2251,6 +2317,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2262,17 +2331,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2288,7 +2358,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2313,12 +2383,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2327,7 +2400,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2348,7 +2421,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2364,6 +2437,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2375,17 +2451,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2401,7 +2478,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2426,12 +2503,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2440,7 +2520,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2461,7 +2541,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2477,6 +2557,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2488,17 +2571,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2514,7 +2598,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2539,12 +2623,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2553,7 +2640,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2574,7 +2661,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2590,6 +2677,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2601,17 +2691,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2627,7 +2718,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2652,12 +2743,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2666,7 +2760,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2687,7 +2781,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2703,6 +2797,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2714,17 +2811,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2740,7 +2838,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2765,12 +2863,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2779,7 +2880,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2800,7 +2901,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2816,6 +2917,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2827,17 +2931,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2853,7 +2958,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2878,12 +2983,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2892,7 +3000,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -2913,7 +3021,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2929,6 +3037,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -2940,17 +3051,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -2966,7 +3078,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -2991,12 +3103,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -3005,7 +3120,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -3026,7 +3141,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -3042,6 +3157,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -3053,17 +3171,18 @@ void Menu::heuristicsTSPMedium() {
                 cout << "1 - Nearest Neighboors + 2-Opt" << endl;
                 cout << "2 - Simulated Annealing" << endl;
                 cout << "3 - Christofides" << endl;
+                cout << "4 - Back" << endl;
                 cout << "Option: ";
                 cin >> this->option;
 
-                if (this->option < 1 || this->option > 3) {
+                if (this->option < 1 || this->option > 4) {
                     cout << "Invalid Option!" << endl;
                 }
 
-                system("cls");
+                system("cls");system("clear");
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
-            } while(this->option < 1 || this->option > 3);
+            } while(this->option < 1 || this->option > 4);
 
             switch(this->option){
                 case 1: {
@@ -3079,7 +3198,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- NEAREST NEIGHBOORS + 2-OPT MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -3104,12 +3223,15 @@ void Menu::heuristicsTSPMedium() {
                     auto begin = std::chrono::high_resolution_clock::now();
 
                     vector<int> path;
-                    double minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
+                    double minCost = tsp.nearestNeighboor(this->tsp.mediumGraph, path);
+                    tsp.twoOpt(this->tsp.mediumGraph, path, minCost);
+                    path.push_back(0);
+                    minCost = tsp.simulatedAnnealing(this->tsp.mediumGraph, path);
 
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- SIMULATED ANNEALING MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -3118,7 +3240,7 @@ void Menu::heuristicsTSPMedium() {
                     for (int i = 0; i < this->tsp.mediumGraph.getNumVertex(); i++) {
                         cout << " " << path[i] << " ->";
                     }
-
+                    cout << " " << path[0] << endl;
                     cout << "Execution time: " << elapsed.count() * 1e-9 << " seconds." << endl;
 
                     //wait for user input
@@ -3139,7 +3261,7 @@ void Menu::heuristicsTSPMedium() {
                     auto end = std::chrono::high_resolution_clock::now();
                     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << minCost << endl;
+                    cout << "----------------- CHRISTOFIDES MINIMUM PATH -----------------" << endl;
 
                     cout << "The minimum cost to travel between all points is " << minCost << endl;
 
@@ -3155,6 +3277,9 @@ void Menu::heuristicsTSPMedium() {
                     cout << "Press any key to continue...";
                     cin.get();
 
+                    break;
+                }
+                case 4: default: {
                     break;
                 }
             }
@@ -3170,7 +3295,7 @@ void Menu::heuristicsTSPMedium() {
         }
     }
 
-    system("cls");
+    system("cls");system("clear");
 
     getMenu();
 }

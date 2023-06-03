@@ -279,7 +279,6 @@ double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double in
 
     //initialize path
     vector<int> currentPath = path;
-
     vector<int> bestPath = currentPath;
 
     //initialize cost
@@ -289,6 +288,7 @@ double TSP::simulatedAnnealing(Graph& chosen_graph, vector<int>& path, double in
     //initialize temperature
     const double minTemperature = 1e-6;
     double temperature = initialTemperature;
+
 
     //initialize random generator
     std::mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
@@ -432,7 +432,8 @@ std::vector<int> TSP:: swapVertex(std::vector<int> &path, int i, int j){
 }
 
 double TSP:: getPathCost(Graph& chosen_graph, std::vector<int> &path){
-    double cost = 0;
+    double cost = 0.0;
+    if(path.empty()) return 0.0;
     for (int i = 0; i < path.size()-1; i++){
         cost += chosen_graph.getWeight(chosen_graph.findVertex(path[i]), chosen_graph.findVertex(path[i+1]));
     }
